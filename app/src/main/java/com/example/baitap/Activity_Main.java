@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Activity_Main extends AppCompatActivity {
+    BottomNavigationView navView;
     ImageView menu_button;
     Button search;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +29,9 @@ public class Activity_Main extends AppCompatActivity {
 
         menu_button=findViewById(R.id.menu_button);
 
-
+        navView=findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        navView.setSelectedItemId(R.id.nav_thuVien);
         menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +48,8 @@ public class Activity_Main extends AppCompatActivity {
             switch (item.getItemId())
             {
                 case R.id.nav_hot:
-
+                    fragment=new Fragment_XuHuong();
+                    loadFragment(fragment);
 
                     return true;
 
@@ -76,7 +80,7 @@ public class Activity_Main extends AppCompatActivity {
     {
         //load fragment
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.lay,fragment);
+        transaction.replace(R.id.nav_fragment,fragment);
         //transaction.addToBackStack(null);
         transaction.commit();
     }

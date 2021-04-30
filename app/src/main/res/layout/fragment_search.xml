@@ -30,7 +30,17 @@
                 android:cursorVisible="false"
                 android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:hint="Name, Description"
-                android:padding="8dp" />
+
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:focusable="true"
+                android:clickable="true"/>
 
             <include
                 android:id="@+id/layouttitle"
