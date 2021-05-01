@@ -26,6 +26,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    repositories {
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+
+    }
 }
 
 dependencies {
@@ -39,4 +44,10 @@ dependencies {
 
     // Round Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //Spring Back Layout for over scroll effect
+    implementation 'com.github.ldt-libs:SpringBackLayout:1.0'
+
+    // InsetsView
+    implementation 'com.github.ldt-libs:InsetsView:1.1'
 }

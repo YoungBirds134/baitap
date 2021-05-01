@@ -1,10 +1,13 @@
-package com.example.baitap;
+package com.example.baitap.util;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.baitap.Activity_Main;
+import com.example.baitap.R;
 
 public class MainActivity extends AppCompatActivity {
 

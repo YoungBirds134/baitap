@@ -5,18 +5,21 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.widget.ImageView;
-import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.baitap.Fragment.Fragment_LoveSongs;
+import com.example.baitap.Fragment.Fragment_PlayList;
+import com.example.baitap.Fragment.Fragment_Search;
+import com.example.baitap.Fragment.Fragment_XuHuong;
+import com.example.baitap.util.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Activity_Main extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class Activity_Main extends AppCompatActivity {
         menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this,MainActivity.class);
+                Intent intent = new Intent(Activity_Main.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -55,6 +58,8 @@ public class Activity_Main extends AppCompatActivity {
 
                 case R.id.nav_star:
 
+                    fragment=new Fragment_LoveSongs();
+                    loadFragment(fragment);
 
                     return true;
                 case R.id.nav_thuVien:
@@ -62,7 +67,8 @@ public class Activity_Main extends AppCompatActivity {
 
                     return true;
                 case R.id.nav_playList:
-
+                    fragment=new Fragment_PlayList();
+                    loadFragment(fragment);
 
                     return true;
 
