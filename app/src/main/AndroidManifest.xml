@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".Activity_Main" />
         <activity android:name=".Activity_Search" />
+        <activity android:name=".Activity_NowPlaying" />
     </application>
 
 </manifest>

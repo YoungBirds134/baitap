@@ -26,15 +26,17 @@ public class Activity_Main extends AppCompatActivity {
     BottomNavigationView navView;
     ImageView menu_button;
     Button search;
+    Button button_NowPlaying;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home);
 
         menu_button=findViewById(R.id.menu_button);
-
+button_NowPlaying=findViewById(R.id.button_NowPlaying);
         navView=findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_thuVien);
+
         menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +44,22 @@ public class Activity_Main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        button_NowPlaying.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Activity_Main.this, Activity_NowPlaying.class);
+                startActivity(intent1);
+            }
+        });
+
     }
+
+
+
+
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -90,5 +107,6 @@ public class Activity_Main extends AppCompatActivity {
         //transaction.addToBackStack(null);
         transaction.commit();
     }
+
 
 }

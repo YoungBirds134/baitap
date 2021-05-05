@@ -7,7 +7,7 @@
     tools:background="@color/library_back_color">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button" />
