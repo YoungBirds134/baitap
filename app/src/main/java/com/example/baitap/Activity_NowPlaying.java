@@ -1,11 +1,13 @@
 package com.example.baitap;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +16,10 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
 
     // views declartion
+
     TextView tvTime, tvDuration;
     SeekBar seekBarTime, seekBarVolume;
-    Button btnPlay;
+    Button btnPlay,btnPre,btnSkip;
 
     MediaPlayer musicPlayer;
 
@@ -34,6 +37,8 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         seekBarTime = findViewById(R.id.seekBarTime);
         seekBarVolume = findViewById(R.id.seekBarVolume);
         btnPlay = findViewById(R.id.btnPlay);
+        btnPre = findViewById(R.id.btnPre);
+        btnSkip = findViewById(R.id.btnSkip );
 
         musicPlayer = MediaPlayer.create(this, R.raw.free_sound);
         musicPlayer.setLooping(true);
@@ -44,6 +49,9 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         tvDuration.setText(duration);
 
         btnPlay.setOnClickListener(this);
+btnPre.setOnClickListener(this);
+btnSkip.setOnClickListener(this);
+
 
         seekBarVolume.setProgress(50);
         seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -139,6 +147,12 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
                 musicPlayer.start();
                 btnPlay.setBackgroundResource(R.drawable.ic_pause);
             }
+        }else if (view.getId() == R.id.btnPre)
+        {
+            Toast.makeText(Activity_NowPlaying.this, "This is a message: Pre", Toast.LENGTH_LONG).show();
+        }else  if (view.getId() == R.id.btnSkip)
+        {
+            Toast.makeText(Activity_NowPlaying.this, "This is a message: Skip", Toast.LENGTH_LONG).show();
         }
     }
 }
