@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.baitap.Fragment.Fragment_LoveSongs;
 import com.example.baitap.Fragment.Fragment_PlayList;
 import com.example.baitap.Fragment.Fragment_Search;
+import com.example.baitap.Fragment.Fragment_ThuVien;
 import com.example.baitap.Fragment.Fragment_XuHuong;
 import com.example.baitap.util.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +34,7 @@ public class Activity_Main extends AppCompatActivity {
 
         menu_button=findViewById(R.id.menu_button);
 button_NowPlaying=findViewById(R.id.button_NowPlaying);
-        navView=findViewById(R.id.nav_view);
+        navView=findViewById(R.id.nav_view_thuvien);
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_thuVien);
 
@@ -81,7 +82,8 @@ button_NowPlaying=findViewById(R.id.button_NowPlaying);
                     return true;
                 case R.id.nav_thuVien:
 
-
+                    fragment=new Fragment_ThuVien();
+                    loadFragment(fragment);
                     return true;
                 case R.id.nav_playList:
                     fragment=new Fragment_PlayList();
@@ -103,7 +105,7 @@ button_NowPlaying=findViewById(R.id.button_NowPlaying);
     {
         //load fragment
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_fragment,fragment);
+        transaction.replace(R.id.nav_fragment_thuvien,fragment);
         //transaction.addToBackStack(null);
         transaction.commit();
     }

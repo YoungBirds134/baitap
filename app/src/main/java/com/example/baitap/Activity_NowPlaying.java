@@ -19,7 +19,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
     TextView tvTime, tvDuration;
     SeekBar seekBarTime, seekBarVolume;
-    Button btnPlay,btnPre,btnSkip;
+    Button btnPlay, btnPre, btnSkip;
 
     MediaPlayer musicPlayer;
 
@@ -38,9 +38,9 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         seekBarVolume = findViewById(R.id.seekBarVolume);
         btnPlay = findViewById(R.id.btnPlay);
         btnPre = findViewById(R.id.btnPre);
-        btnSkip = findViewById(R.id.btnSkip );
+        btnSkip = findViewById(R.id.btnSkip);
 
-        musicPlayer = MediaPlayer.create(this, R.raw.free_sound);
+        musicPlayer = MediaPlayer.create(this, R.raw.gustixa_lemon_tree_);
         musicPlayer.setLooping(true);
         musicPlayer.seekTo(0);
         musicPlayer.setVolume(0.5f, 0.5f);
@@ -49,8 +49,8 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         tvDuration.setText(duration);
 
         btnPlay.setOnClickListener(this);
-btnPre.setOnClickListener(this);
-btnSkip.setOnClickListener(this);
+        btnPre.setOnClickListener(this);
+        btnSkip.setOnClickListener(this);
 
 
         seekBarVolume.setProgress(50);
@@ -58,7 +58,7 @@ btnSkip.setOnClickListener(this);
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean isFromUser) {
                 float volume = progress / 100f;
-                musicPlayer.setVolume(volume,volume);
+                musicPlayer.setVolume(volume, volume);
             }
 
             @Override
@@ -76,7 +76,7 @@ btnSkip.setOnClickListener(this);
         seekBarTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean isFromUser) {
-                if(isFromUser) {
+                if (isFromUser) {
                     musicPlayer.seekTo(progress);
                     seekBar.setProgress(progress);
                 }
@@ -98,7 +98,7 @@ btnSkip.setOnClickListener(this);
             @Override
             public void run() {
                 while (musicPlayer != null) {
-                    if(musicPlayer.isPlaying()) {
+                    if (musicPlayer.isPlaying()) {
                         try {
                             final double current = musicPlayer.getCurrentPosition();
                             final String elapsedTime = millisecondsToString((int) current);
@@ -112,7 +112,8 @@ btnSkip.setOnClickListener(this);
                             });
 
                             Thread.sleep(1000);
-                        }catch (InterruptedException e) {}
+                        } catch (InterruptedException e) {
+                        }
                     }
                 }
             }
@@ -125,20 +126,20 @@ btnSkip.setOnClickListener(this);
         String elapsedTime = "";
         int minutes = time / 1000 / 60;
         int seconds = time / 1000 % 60;
-        elapsedTime = minutes+":";
-        if(seconds < 10) {
+        elapsedTime = minutes + ":";
+        if (seconds < 10) {
             elapsedTime += "0";
         }
         elapsedTime += seconds;
 
-        return  elapsedTime;
+        return elapsedTime;
     }
 
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btnPlay) {
-            if(musicPlayer.isPlaying()) {
+        if (view.getId() == R.id.btnPlay) {
+            if (musicPlayer.isPlaying()) {
                 // is playing
                 musicPlayer.pause();
                 btnPlay.setBackgroundResource(R.drawable.ic_play);
@@ -147,11 +148,9 @@ btnSkip.setOnClickListener(this);
                 musicPlayer.start();
                 btnPlay.setBackgroundResource(R.drawable.ic_pause);
             }
-        }else if (view.getId() == R.id.btnPre)
-        {
+        } else if (view.getId() == R.id.btnPre) {
             Toast.makeText(Activity_NowPlaying.this, "This is a message: Pre", Toast.LENGTH_LONG).show();
-        }else  if (view.getId() == R.id.btnSkip)
-        {
+        } else if (view.getId() == R.id.btnSkip) {
             Toast.makeText(Activity_NowPlaying.this, "This is a message: Skip", Toast.LENGTH_LONG).show();
         }
     }

@@ -320,4 +320,7 @@
     <string name="back_description">Back to previous screen</string>
     <string name="left_right_audio_balance">Left Right Audio Balance</string>
     <string name="play_preview_all">Play preview all</string>
+    <string name="title_activity__thu_vien">Activity_ThuVien</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
