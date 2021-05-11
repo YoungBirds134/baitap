@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp">
 <com.makeramen.roundedimageview.RoundedImageView
-    android:id="@+id/image"
+    android:id="@+id/txt_image"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
@@ -22,12 +22,12 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/image"
-        app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toStartOf="@id/txt_image"
+        app:layout_constraintEnd_toEndOf="@id/txt_image"
+        app:layout_constraintTop_toBottomOf="@id/txt_image"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:id="@+id/title"
+        android:id="@+id/title_thuvien"
         tools:text="Playlist A"
         android:gravity="center"
         android:textSize="14sp"
