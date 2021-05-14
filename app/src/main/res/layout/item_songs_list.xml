@@ -45,5 +45,16 @@
             android:textSize="12sp"
             android:maxLines="1"
             android:ellipsize="end"/>
+
+        <ToggleButton
+            android:id="@+id/favBtn"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="@dimen/_24dp"
+            android:checked="false"
+android:textOn="Like"
+            android:textOff="Unlike"
+            android:background="@drawable/toggle_custom"
+            />
+
     </LinearLayout>
 </LinearLayout>

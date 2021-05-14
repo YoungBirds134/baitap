@@ -1,12 +1,18 @@
 package com.example.baitap.Adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baitap.Model.Song;
@@ -18,7 +24,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
     @NonNull
 
 Context context;
-    ArrayList<Song> arrayList;
+   public static ArrayList<Song> arrayList;
 
     public Adapter_RecycleView_Song_ThuVien(@NonNull Context context, ArrayList<Song> arrayList) {
         this.context = context;
@@ -37,6 +43,7 @@ Context context;
 
         holder.textView_Name.setText(song.getName_Song());
         holder.textView_Des.setText(song.image_Song);
+
     }
 
     @Override
@@ -47,14 +54,29 @@ Context context;
     public static class SongHolder extends RecyclerView.ViewHolder {
 
         TextView textView_Name;
-        TextView textView_Des;
-
+        TextView textView_Des, likeCountTextView;
+ToggleButton favBtn;
 
 
         public SongHolder(@NonNull View itemView) {
             super(itemView);
             textView_Name=(TextView)itemView.findViewById(R.id.item_album_view_title);
             textView_Des=(TextView)itemView.findViewById(R.id.item_album_view_aritst);
+            favBtn = itemView.findViewById(R.id.favBtn);
+favBtn.setChecked(false);
+
+            //add to fav btn
+            favBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+
+
+                    Toast.makeText(view.getContext(), "You clicked " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-    }
-}
+
+
+       }}
