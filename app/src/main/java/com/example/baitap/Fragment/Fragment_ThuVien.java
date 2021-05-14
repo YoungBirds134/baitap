@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,14 +36,7 @@ public class Fragment_ThuVien extends Fragment {
 
 
 
-        recyclerView=view.findViewById(R.id.recycler_view_thuvien);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        arrayList=Song.initSong();
-        adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(arrayList);
-        recyclerView.setHasFixedSize(true);
 
-
-        recyclerView.setAdapter(adapter_recycleView_song_thuVien);
 
         return view;
     }
@@ -53,6 +44,19 @@ public class Fragment_ThuVien extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        arrayList= initSong();
+        adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(getContext(),arrayList);
+        recyclerView=view.findViewById(R.id.recycler_view_thuvien);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter_recycleView_song_thuVien);
+    }
+    public ArrayList<Song> initSong(){
+        ArrayList<Song> arrayList = new ArrayList<>();
+        for (int i = 1; i<100;i++)
+        {
+            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,12+i,"Path"+i,0));
 
+        }
+        return  arrayList;
     }
 }

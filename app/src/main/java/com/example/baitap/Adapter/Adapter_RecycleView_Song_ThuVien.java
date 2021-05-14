@@ -1,11 +1,9 @@
 package com.example.baitap.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,13 +20,14 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
 Context context;
     ArrayList<Song> arrayList;
 
-    public Adapter_RecycleView_Song_ThuVien(ArrayList<Song> arrayList) {
+    public Adapter_RecycleView_Song_ThuVien(@NonNull Context context, ArrayList<Song> arrayList) {
+        this.context = context;
         this.arrayList = arrayList;
     }
 
     @Override
     public SongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_songs_list, parent, false);
+        View convertView = LayoutInflater.from(context).inflate(R.layout.item_songs_list, parent, false);
         return new SongHolder(convertView);
     }
 
@@ -36,8 +35,8 @@ Context context;
     public void onBindViewHolder(@NonNull SongHolder holder, int position) {
         Song song = arrayList.get(position);
 
-        holder.textView_Name.setText(song.getTitle());
-        holder.textView_Des.setText(song.getArtistName());
+        holder.textView_Name.setText(song.getName_Song());
+        holder.textView_Des.setText(song.image_Song);
     }
 
     @Override
@@ -50,14 +49,12 @@ Context context;
         TextView textView_Name;
         TextView textView_Des;
 
-        public SongHolder(@NonNull View itemView, TextView textView_Name, TextView textView_Des) {
-            super(itemView);
-            this.textView_Name = itemView.findViewById(R.id.item_album_view_title);
-            this.textView_Des = itemView.findViewById(R.id.item_album_view_aritst);
-        }
+
 
         public SongHolder(@NonNull View itemView) {
             super(itemView);
+            textView_Name=(TextView)itemView.findViewById(R.id.item_album_view_title);
+            textView_Des=(TextView)itemView.findViewById(R.id.item_album_view_aritst);
         }
     }
 }

@@ -1,52 +1,21 @@
 package com.example.baitap.Model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-public class Genre extends Media implements Serializable {
-    public final int id;
-    public final String name;
-    public final int songCount;
+public class Genre implements Serializable {
+    public  final int id_Genre;
+    public  final String name_Genre;
 
-    public Genre(int id, String name, int songCount) {
-        this.id = id;
-        this.name = name;
-        this.songCount = songCount;
+    public Genre(int id_Genre, String name_Genre) {
+        this.id_Genre = id_Genre;
+        this.name_Genre = name_Genre;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Genre genre = (Genre) o;
-        return id == genre.id &&
-                songCount == genre.songCount &&
-                Objects.equals(name, genre.name);
+    public int getId_Genre() {
+        return id_Genre;
     }
 
-    @Override
-    public String toString() {
-        return "Genre{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", songCount=" + songCount +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, songCount);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getSongCount() {
-        return songCount;
+    public String getName_Genre() {
+        return name_Genre;
     }
 }
