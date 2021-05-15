@@ -52,11 +52,12 @@ public class Fragment_ThuVien extends Fragment {
     }
     public ArrayList<Song> initSong(){
         ArrayList<Song> arrayList = new ArrayList<>();
-        for (int i = 1; i<100;i++)
+        for (int i = 1; i<10;i++)
         {
-            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,12+i,"Path"+i,0));
+            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,12+i,"Path"+i,0,"date"+i,"Genre"+i,"Album"+i,"Artist"+i));
 
         }
         return  arrayList;
     }
-}
+    }
+
