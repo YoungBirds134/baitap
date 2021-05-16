@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -17,12 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapter_RecycleView_Song_ThuVien.SongHolder> {
     @NonNull
-
+String url="http://192.168.1.9:8080/MusicPlayer/image/big_city_boi.jpg";
 Context context;
    public static ArrayList<Song> arrayList;
 
@@ -43,6 +45,7 @@ Context context;
 
         holder.textView_Name.setText(song.getName_Song());
         holder.textView_Des.setText(song.image_Song);
+        Picasso.with(context).load(url+ song.getImage_Song()).placeholder(R.drawable.music_empty).into(holder.imageView_Song);
 
     }
 
@@ -56,12 +59,14 @@ Context context;
         TextView textView_Name;
         TextView textView_Des, likeCountTextView;
 ToggleButton favBtn;
+ImageView imageView_Song;
 
 
         public SongHolder(@NonNull View itemView) {
             super(itemView);
             textView_Name=(TextView)itemView.findViewById(R.id.item_album_view_title);
             textView_Des=(TextView)itemView.findViewById(R.id.item_album_view_aritst);
+            imageView_Song=itemView.findViewById(R.id.item_album_view_image);
             favBtn = itemView.findViewById(R.id.favBtn);
 favBtn.setChecked(false);
 

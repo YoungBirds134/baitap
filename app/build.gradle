@@ -41,6 +41,8 @@ dependencies {
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'com.android.volley:dc-volley:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -53,4 +55,7 @@ dependencies {
 
     // InsetsView
     implementation 'com.github.ldt-libs:InsetsView:1.1'
+
+    // Volley
+
 }
