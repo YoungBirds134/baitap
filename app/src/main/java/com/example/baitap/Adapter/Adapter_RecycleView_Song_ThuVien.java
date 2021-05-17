@@ -20,13 +20,14 @@ import java.util.ArrayList;
 
 public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapter_RecycleView_Song_ThuVien.SongHolder> {
     @NonNull
-String url="http://192.168.1.9:8080/MusicPlayer/image/big_city_boi.jpg";
-Context context;
-   public static ArrayList<Song> arrayList;
+String url="http://192.168.1.7:8080/MusicPlayer/image/";
 
-    public Adapter_RecycleView_Song_ThuVien(@NonNull Context context, ArrayList<Song> arrayList) {
-        this.context = context;
+    ArrayList<Song> arrayList;
+    Context context;
+
+    public Adapter_RecycleView_Song_ThuVien(ArrayList<Song> arrayList, Context context) {
         this.arrayList = arrayList;
+        this.context = context;
     }
 
     @Override
@@ -40,7 +41,7 @@ Context context;
         Song song = arrayList.get(position);
 
         holder.textView_Name.setText(song.getName_Song());
-        holder.textView_Des.setText(song.image_Song);
+        holder.textView_Des.setText(song.getName_Artist());
         Picasso.with(context).load(url+ song.getImage_Song()).placeholder(R.drawable.music_empty).into(holder.imageView_Song);
 
     }
@@ -56,7 +57,7 @@ Context context;
         TextView textView_Des, likeCountTextView;
 ToggleButton favBtn;
 ImageView imageView_Song;
-
+TextView number;
 
         public SongHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +65,7 @@ ImageView imageView_Song;
             textView_Des=(TextView)itemView.findViewById(R.id.item_album_view_aritst);
             imageView_Song=itemView.findViewById(R.id.item_album_view_image);
             favBtn = itemView.findViewById(R.id.favBtn);
+            number=itemView.findViewById(R.id.number);
 favBtn.setChecked(false);
 
             //add to fav btn
