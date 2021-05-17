@@ -1,7 +1,11 @@
 package com.example.baitap;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -33,6 +37,9 @@ public class Demo extends AppCompatActivity {
     ArrayList<Song> data= new ArrayList();
     Context context;
     String url="http://192.168.1.7:8080/MusicPlayer/getSongs.php";
+    Button button_Play;
+    MediaPlayer musicPlayer;
+    Handler handler  = new Handler();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +52,32 @@ public class Demo extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
 
+
+        musicPlayer = new MediaPlayer();
+        button_Play=findViewById(R.id.button_Play);
+        button_Play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreparePlaying();
+            }
+        });
+
     }
 
-
+public  void PreparePlaying(){
+        try {
+            musicPlayer.setDataSource("http://192.168.1.7:8080/MusicPlayer/audio/BigCityBoi.mp3");
+            musicPlayer.prepare();
+            musicPlayer.start();
+            Toast.makeText(this,"Success",Toast.LENGTH_LONG).show();
+        }catch (Exception exception){
+             Toast.makeText(this,exception.getMessage(),Toast.LENGTH_LONG).show();
+        }
+}
 
     public ArrayList<Song> initSong(){
         ArrayList<Song> arrayList = new ArrayList<>();
-        for (int i = 1; i<10;i++)
+        for (int i = 1; i<2;i++)
         {
             arrayList.add(new Song(0+i,"Song"+i,"Image"+i,"12"+i,"Path"+i,0,"date"+i,"Genre"+i,"Album"+i,"Artist"+i));
 
