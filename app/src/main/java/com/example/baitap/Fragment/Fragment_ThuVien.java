@@ -30,14 +30,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Fragment_ThuVien extends Fragment {
+
     RecyclerView   recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     ArrayList<Song> arrayList= new ArrayList<>();
     Context context;
-    String url="http://192.168.1.9:8080/MusicPlayer/index.php";
+    String url="http://192.168.1.9:8080/MusicPlayer/getSongs.php";
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
     }
@@ -47,34 +49,34 @@ public class Fragment_ThuVien extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_thuvien,container,false);
 
+//arrayList=initSong();
+        recyclerView=view.findViewById(R.id.recycler_view_thuvien);
+         adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(getContext(),arrayList);
+        recyclerView.setAdapter(adapter_recycleView_song_thuVien);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
         get_Songs();
-
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        get_Songs();
-        adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(getContext(),arrayList);
-        recyclerView=view.findViewById(R.id.recycler_view_thuvien);
 
-        recyclerView.setAdapter(adapter_recycleView_song_thuVien);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
     }
     public ArrayList<Song> initSong(){
         ArrayList<Song> arrayList = new ArrayList<>();
         for (int i = 1; i<10;i++)
         {
-            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,12+i,"Path"+i,0,"date"+i,"Genre"+i,"Album"+i,"Artist"+i));
+            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,"12"+i,"Path"+i,0,"date"+i,"Genre"+i,"Album"+i,"Artist"+i));
 
         }
         return  arrayList;
     }
     public void get_Songs(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext().getApplicationContext());
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -82,13 +84,20 @@ public class Fragment_ThuVien extends Fragment {
                 {
                     try {
                         JSONObject jsonObject =response.getJSONObject(i);
-                        arrayList.add(new Song(jsonObject.getInt("id_song"),jsonObject.getString("name_song"),jsonObject.getString("image_song"),jsonObject.getLong("duration"),jsonObject.getString("path"),jsonObject.getInt("like"),jsonObject.getString("date"),jsonObject.getString("name_genre"),jsonObject.getString("name_album"),jsonObject.getString("name_artist")));
+                        arrayList.add(new Song(jsonObject.getInt("id_Song"),jsonObject.getString("name_Song"),jsonObject.getString("image_Song"),jsonObject.getString("duration"),jsonObject.getString("path"),jsonObject.getInt("like"),jsonObject.getString("date"),jsonObject.getString("name_Genre"),jsonObject.getString("name_Album"),jsonObject.getString("name_Artist")));
+
                     }
                     catch (JSONException e){
                         e.printStackTrace();
                     }
                 }
+
+
                 adapter_recycleView_song_thuVien.notifyDataSetChanged();
+                for (int i=0; i < 4; i++)
+                {
+                    Toast.makeText(getContext(),"messeage"+arrayList,Toast.LENGTH_LONG).show();
+                }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -97,8 +106,10 @@ public class Fragment_ThuVien extends Fragment {
                 Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_LONG).show();
             }
         };
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,url, (String) null,success,errorListener);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,url,  null,success,errorListener);
         requestQueue.add(jsonArrayRequest);
+
     }
+
     }
 

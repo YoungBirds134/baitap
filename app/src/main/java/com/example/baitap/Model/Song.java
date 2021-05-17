@@ -1,16 +1,12 @@
 package com.example.baitap.Model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Song implements Serializable {
-
-
-public final int id_Song;
+    public int id_Song;
     public  String name_Song;
     public  String image_Song;
-    public  long duration;
+    public  String duration;
     public String path;
     public int like;
     public String date;
@@ -18,7 +14,7 @@ public final int id_Song;
     public  String name_Album;
     public  String name_Artist;
 
-    public Song(int id_Song, String name_Song, String image_Song, long duration, String path, int like, String date, String name_Genre, String name_Album, String name_Artist) {
+    public Song(int id_Song, String name_Song, String image_Song, String duration, String path, int like, String date, String name_Genre, String name_Album, String name_Artist) {
         this.id_Song = id_Song;
         this.name_Song = name_Song;
         this.image_Song = image_Song;
@@ -31,10 +27,12 @@ public final int id_Song;
         this.name_Artist = name_Artist;
     }
 
-
-
     public int getId_Song() {
         return id_Song;
+    }
+
+    public void setId_Song(int id_Song) {
+        this.id_Song = id_Song;
     }
 
     public String getName_Song() {
@@ -53,11 +51,11 @@ public final int id_Song;
         this.image_Song = image_Song;
     }
 
-    public long getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -108,14 +106,5 @@ public final int id_Song;
     public void setName_Artist(String name_Artist) {
         this.name_Artist = name_Artist;
     }
-
-    public ArrayList<Song> initSong(){
-        ArrayList<Song> arrayList = new ArrayList<>();
-        for (int i = 1; i<10;i++)
-        {
-            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,12+i,"Path"+i,0,"date"+i,"Genre"+i,"Album"+i,"Artist"+i));
-
-        }
-return  arrayList;
-    }
+public Song(){}
 }
