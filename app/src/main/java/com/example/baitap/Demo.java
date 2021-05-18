@@ -36,7 +36,7 @@ public class Demo extends AppCompatActivity {
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     ArrayList<Song> data= new ArrayList();
     Context context;
-    String url="http://192.168.1.7:8080/MusicPlayer/getSongs.php";
+    String url="https://huychimnonblog.000webhostapp.com/getSongs.php";
     Button button_Play;
     MediaPlayer musicPlayer;
     Handler handler  = new Handler();

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapter_RecycleView_Song_ThuVien.SongHolder> {
     @NonNull
-String url="http://192.168.1.7:8080/MusicPlayer/image/";
+String url="https://huychimnonblog.000webhostapp.com/image/";
 
     ArrayList<Song> arrayList;
     Context context;
