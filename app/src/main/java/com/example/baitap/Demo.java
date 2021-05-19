@@ -5,7 +5,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.baitap.Adapter.Adapter_List_Songs;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.Model.Song;
 
@@ -40,27 +43,33 @@ public class Demo extends AppCompatActivity {
     Button button_Play;
     MediaPlayer musicPlayer;
     Handler handler  = new Handler();
+    Adapter_List_Songs adapter_list_songs;
+    ListView listView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        get_Songs();
+
         setContentView(demo);
       //  arrayList=initSong();
-        recyclerView=findViewById(R.id.recycler_view_thuvien);
-        adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(data,this);
-        recyclerView.setAdapter(adapter_recycleView_song_thuVien);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+//        recyclerView=findViewById(R.id.recycler_view_thuvien);
+//        adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(data,this);
+//        recyclerView.setAdapter(adapter_recycleView_song_thuVien);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-
+       adapter_list_songs = new Adapter_List_Songs(this,data);
+        listView = findViewById(R.id.recycler_view_thuvien);
+        listView.setAdapter(adapter_list_songs);
 
         musicPlayer = new MediaPlayer();
-        button_Play=findViewById(R.id.button_Play);
-        button_Play.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                PreparePlaying();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
+
+
         });
+        get_Songss();
 
     }
 
@@ -85,7 +94,7 @@ public  void PreparePlaying(){
         return  arrayList;
     }
 
-    public void get_Songs(){
+    public void get_Songss(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             @Override
@@ -103,7 +112,7 @@ public  void PreparePlaying(){
                 }
 
 
-                adapter_recycleView_song_thuVien.notifyDataSetChanged();
+               adapter_list_songs.notifyDataSetChanged();
                 for (int i=0; i < 4; i++)
                 {
                     Toast.makeText(getApplicationContext(),"messeage"+data,Toast.LENGTH_LONG).show();

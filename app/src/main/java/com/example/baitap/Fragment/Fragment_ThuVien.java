@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOError;
 import java.util.ArrayList;
 
 public class Fragment_ThuVien extends Fragment {
@@ -36,6 +38,7 @@ public class Fragment_ThuVien extends Fragment {
     ArrayList<Song> arrayList= new ArrayList<>();
     Context context;
     String url="https://huychimnonblog.000webhostapp.com/getSongs.php";
+    ImageView imageView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
