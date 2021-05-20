@@ -1,6 +1,8 @@
 package com.example.baitap.Fragment;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +33,7 @@ import org.json.JSONObject;
 import java.io.IOError;
 import java.util.ArrayList;
 
-public class Fragment_ThuVien extends Fragment {
+public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener {
 
     RecyclerView   recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
@@ -39,6 +41,8 @@ public class Fragment_ThuVien extends Fragment {
     Context context;
     String url="https://huychimnonblog.000webhostapp.com/getSongs.php";
     ImageView imageView;
+    Song song = new Song();
+MediaPlayer mediaPlayer;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,7 @@ public class Fragment_ThuVien extends Fragment {
         recyclerView=view.findViewById(R.id.recycler_view_thuvien);
          adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(arrayList,getContext());
         recyclerView.setAdapter(adapter_recycleView_song_thuVien);
+        adapter_recycleView_song_thuVien.setOnItemClickListener(Fragment_ThuVien.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
         get_Songs();
@@ -114,5 +119,29 @@ public class Fragment_ThuVien extends Fragment {
 
     }
 
+    @Override
+    public void onItemClick(int position) {
+        song= arrayList.get(position);
+        MediaPlayer player = MediaPlayer.create(getContext(), Uri.parse(song.getPath()));
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+        Toast.makeText(getContext(),""+position+song.getPath(),Toast.LENGTH_LONG).show();
+
+//        try {
+//            mediaPlayer.setDataSource(song.getPath());
+//            mediaPlayer.prepare();
+//            mediaPlayer.start();
+//            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+//        } catch (Exception exception) {
+//            Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
+//        }
     }
+
+
+
+}
 

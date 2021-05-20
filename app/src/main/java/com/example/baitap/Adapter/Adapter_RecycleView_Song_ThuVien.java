@@ -27,7 +27,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
 
     ArrayList<Song> arrayList;
     Context context;
-    private AdapterView.OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mOnItemClickListener;
     MediaPlayer mediaPlayer;
     public Song song = new Song();
 
@@ -36,12 +36,13 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
         this.context = context;
     }
 
+
     public interface OnItemClickListener {
-        void onItemClick( View view, Song obj, int position);
+        void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
-        this.mOnItemClickListener = (AdapterView.OnItemClickListener) mItemClickListener;
+    public void setOnItemClickListener( OnItemClickListener Listener) {
+        this.mOnItemClickListener = Listener;
     }
 
     @Override
@@ -52,22 +53,14 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
 
     @Override
     public void onBindViewHolder(@NonNull SongHolder holder, int position) {
-        final Song song = arrayList.get(position);
+       Song song = arrayList.get(position);
 
         holder.textView_Name.setText(arrayList.get(position).getName_Song());
         holder.textView_Des.setText(arrayList.get(position).getName_Artist());
         Picasso.with(context).load(url + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(holder.imageView_Song);
 
 
-     holder.getBtn_playsong().setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             if (mOnItemClickListener != null) {
-             mOnItemClickListener.onItemClick(v,song,position);
-             }
-             }
 
-     });
     }
 
     @Override
@@ -91,7 +84,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
             imageView_Song = itemView.findViewById(R.id.item_album_view_image);
             favBtn = itemView.findViewById(R.id.favBtn);
             number = itemView.findViewById(R.id.number);
-            setBtn_playsong((Button) itemView.findViewById(R.id.btnPlaysong));
+
             favBtn.setChecked(false);
 
 
@@ -104,6 +97,19 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
 
                     PreparePlaying();
                     Toast.makeText(view.getContext(), "You clicked " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener!=null)
+                    {
+                        int position = getAdapterPosition();
+                        if (position!=RecyclerView.NO_POSITION)
+                        {
+                            mOnItemClickListener.onItemClick(position);
+                        }
+                    }
                 }
             });
         }
@@ -119,12 +125,8 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
             }
         }
 
-        public AdapterView<?> getBtn_playsong() {
-            return btn_playsong;
-        }
 
-        public void setBtn_playsong(Button btn_playsong) {
-            this.btn_playsong = btn_playsong;
-        }
+
+
     }
 }
