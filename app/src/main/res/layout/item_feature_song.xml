@@ -61,15 +61,18 @@
         app:tint="@color/FlatWhite"
         android:padding="22dp"
         android:background="@drawable/ripple_effect"/>
+
     <ImageView
         android:id="@+id/quick_play_pause"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/txt_image"
-        app:layout_constraintEnd_toEndOf="@id/txt_image"
-        app:layout_constraintTop_toTopOf="@id/txt_image"
-        app:layout_constraintBottom_toBottomOf="@id/txt_image"
-        android:elevation="1dp"
         android:alpha="0.55"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/txt_image"
+        app:layout_constraintEnd_toEndOf="@id/txt_image"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/txt_image"
+        app:layout_constraintTop_toTopOf="@id/txt_image"
+        app:layout_constraintVertical_bias="1.0"
         app:tint="#394545" />
 </androidx.constraintlayout.widget.ConstraintLayout>

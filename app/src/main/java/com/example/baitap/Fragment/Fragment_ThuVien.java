@@ -35,18 +35,18 @@ import java.util.ArrayList;
 
 public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener {
 
-    RecyclerView   recyclerView;
+    RecyclerView recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
-    ArrayList<Song> arrayList= new ArrayList<>();
+    ArrayList<Song> arrayList = new ArrayList<>();
     Context context;
-    String url="https://huychimnonblog.000webhostapp.com/getSongs.php";
+    String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
     ImageView imageView;
     Song song = new Song();
-MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
     }
@@ -54,14 +54,14 @@ MediaPlayer mediaPlayer;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_thuvien,container,false);
+        View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
 
 //arrayList=initSong();
-        recyclerView=view.findViewById(R.id.recycler_view_thuvien);
-         adapter_recycleView_song_thuVien= new Adapter_RecycleView_Song_ThuVien(arrayList,getContext());
+        recyclerView = view.findViewById(R.id.recycler_view_thuvien);
+        adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
         recyclerView.setAdapter(adapter_recycleView_song_thuVien);
         adapter_recycleView_song_thuVien.setOnItemClickListener(Fragment_ThuVien.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         get_Songs();
         return view;
@@ -72,75 +72,73 @@ MediaPlayer mediaPlayer;
         super.onViewCreated(view, savedInstanceState);
 
 
-
     }
-    public ArrayList<Song> initSong(){
+
+    public ArrayList<Song> initSong() {
         ArrayList<Song> arrayList = new ArrayList<>();
-        for (int i = 1; i<10;i++)
-        {
-            arrayList.add(new Song(0+i,"Song"+i,"Image"+i,"12"+i,"Path"+i,0,"date"+i,"Genre"+i,"Album"+i,"Artist"+i));
+        for (int i = 1; i < 10; i++) {
+            arrayList.add(new Song(0 + i, "Song" + i, "Image" + i, "12" + i, "Path" + i, 0, "date" + i, "Genre" + i, "Album" + i, "Artist" + i));
 
         }
-        return  arrayList;
+        return arrayList;
     }
-    public void get_Songs(){
+
+    public void get_Songs() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext().getApplicationContext());
         Response.Listener<JSONArray> success = new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for (int i =0; i< response.length();i++)
-                {
+                for (int i = 0; i < response.length(); i++) {
                     try {
-                        JSONObject jsonObject =response.getJSONObject(i);
-                        arrayList.add(new Song(jsonObject.getInt("iid_Song"),jsonObject.getString("name_Song"),jsonObject.getString("image_Song"),jsonObject.getString("duration"),jsonObject.getString("path"),jsonObject.getInt("like"),jsonObject.getString("date"),jsonObject.getString("name_Genre"),jsonObject.getString("name_Album"),jsonObject.getString("name_Artist")));
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        arrayList.add(new Song(jsonObject.getInt("iid_Song"), jsonObject.getString("name_Song"), jsonObject.getString("image_Song"), jsonObject.getString("duration"), jsonObject.getString("path"), jsonObject.getInt("like"), jsonObject.getString("date"), jsonObject.getString("name_Genre"), jsonObject.getString("name_Album"), jsonObject.getString("name_Artist")));
 
-                    }
-                    catch (JSONException e){
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
 
                 adapter_recycleView_song_thuVien.notifyDataSetChanged();
-                for (int i=0; i < 1; i++)
-                {
-                    Toast.makeText(getContext(),"Load Success",Toast.LENGTH_LONG).show();
+                for (int i = 0; i < 1; i++) {
+                    Toast.makeText(getContext(), "Load Success", Toast.LENGTH_LONG).show();
                 }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         };
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,url,  null,success,errorListener);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, success, errorListener);
         requestQueue.add(jsonArrayRequest);
 
     }
 
     @Override
     public void onItemClick(int position) {
-        song= arrayList.get(position);
+        song = arrayList.get(position);
         MediaPlayer player = MediaPlayer.create(getContext(), Uri.parse(song.getPath()));
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                mp.start();
+
+                if (mp.isPlaying()) {
+                    mp.stop();
+
+                    mp.release();
+                } else {
+                    mp.start();
+                }
+
+
             }
         });
-        Toast.makeText(getContext(),""+position+song.getPath(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "" + position + song.getPath(), Toast.LENGTH_LONG).show();
 
-//        try {
-//            mediaPlayer.setDataSource(song.getPath());
-//            mediaPlayer.prepare();
-//            mediaPlayer.start();
-//            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
-//        } catch (Exception exception) {
-//            Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
-//        }
+
     }
-
 
 
 }

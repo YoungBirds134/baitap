@@ -55,10 +55,6 @@ android:textOn="Like"
             android:textOff="Unlike"
             android:background="@drawable/toggle_custom"
             />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnPlaysong"></Button>
 
     </LinearLayout>
 </LinearLayout>
