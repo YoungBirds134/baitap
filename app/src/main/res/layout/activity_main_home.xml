@@ -30,21 +30,6 @@
 
             app:tint="@color/white" />
 
-        <Button
-            android:id="@+id/button_NowPlaying"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="13dp"
-            android:background="#434747"
-            android:backgroundTint="#434747"
-            android:backgroundTintMode="screen"
-            android:text="Now Playing"
-            android:textColor="@color/FlatPink"
-
-            android:textStyle="bold"
-            app:icon="@drawable/backgroud" />
     </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -33,7 +33,7 @@ public class Activity_Main extends AppCompatActivity {
         setContentView(R.layout.activity_main_home);
 
         menu_button=findViewById(R.id.menu_button);
-button_NowPlaying=findViewById(R.id.button_NowPlaying);
+
         navView=findViewById(R.id.nav_view_thuvien);
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_thuVien);
@@ -46,13 +46,7 @@ button_NowPlaying=findViewById(R.id.button_NowPlaying);
             }
         });
 
-        button_NowPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(Activity_Main.this, Activity_NowPlaying.class);
-                startActivity(intent1);
-            }
-        });
+
 
     }
 

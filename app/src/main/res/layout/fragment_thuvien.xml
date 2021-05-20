@@ -14,10 +14,10 @@
 
 
         <Button
-            android:id="@+id/btnPlay"
+            android:id="@+id/btnPlay_Top"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="116dp"
+            android:layout_marginStart="92dp"
             android:background="@drawable/ic_play"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnPre" />
@@ -44,35 +44,36 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btnSkip"
+            android:id="@+id/btnSkip_Top"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/ic_skip_next_white_36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.826"
-            app:layout_constraintStart_toEndOf="@+id/btnPlay" />
+            app:layout_constraintHorizontal_bias="0.648"
+            app:layout_constraintStart_toEndOf="@+id/btnPlay_Top" />
 
         <TextView
-            android:id="@+id/title_thuvien"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/title_Name_Top"
+            android:layout_width="307dp"
+            android:layout_height="27dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/FlatWhite"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/description_thuvien"
+            app:layout_constraintBottom_toTopOf="@id/title_Artist_Top"
             app:layout_constraintEnd_toStartOf="@id/menu_button"
             app:layout_constraintStart_toEndOf="@+id/txt_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
+
             tools:text="Blame" />
 
         <TextView
-            android:id="@+id/description_thuvien"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/title_Artist_Top"
+            android:layout_width="303dp"
+            android:layout_height="25dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="#CCF5F5F5"
@@ -80,7 +81,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/menu_button"
             app:layout_constraintStart_toEndOf="@+id/txt_image"
-            app:layout_constraintTop_toBottomOf="@id/title_thuvien"
+            app:layout_constraintTop_toBottomOf="@id/title_Name_Top"
             tools:text="KYLE." />
 
 

@@ -79,7 +79,7 @@
             tools:layout_editor_absoluteY="52dp" />
 
         <Button
-            android:id="@+id/btnPlay"
+            android:id="@+id/btnPlay_Top"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="48dp"
@@ -88,13 +88,13 @@
             tools:layout_editor_absoluteY="52dp" />
 
         <Button
-            android:id="@+id/btnSkip"
+            android:id="@+id/btnSkip_Top"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/ic_skip_next_white_36dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.704"
-            app:layout_constraintStart_toEndOf="@+id/btnPlay"
+            app:layout_constraintStart_toEndOf="@+id/btnPlay_Top"
             tools:layout_editor_absoluteY="52dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout

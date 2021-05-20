@@ -1,6 +1,5 @@
 package com.example.baitap;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -36,9 +35,9 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         tvDuration = findViewById(R.id.tvDuration);
         seekBarTime = findViewById(R.id.seekBarTime);
         seekBarVolume = findViewById(R.id.seekBarVolume);
-        btnPlay = findViewById(R.id.btnPlay);
+        btnPlay = findViewById(R.id.btnPlay_Top);
         btnPre = findViewById(R.id.btnPre);
-        btnSkip = findViewById(R.id.btnSkip);
+        btnSkip = findViewById(R.id.btnSkip_Top);
 
         musicPlayer = MediaPlayer.create(this, R.raw.gustixa_lemon_tree_);
         musicPlayer.setLooping(true);
@@ -138,7 +137,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnPlay) {
+        if (view.getId() == R.id.btnPlay_Top) {
             if (musicPlayer.isPlaying()) {
                 // is playing
                 musicPlayer.pause();
@@ -150,7 +149,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
             }
         } else if (view.getId() == R.id.btnPre) {
             Toast.makeText(Activity_NowPlaying.this, "This is a message: Pre", Toast.LENGTH_LONG).show();
-        } else if (view.getId() == R.id.btnSkip) {
+        } else if (view.getId() == R.id.btnSkip_Top) {
             Toast.makeText(Activity_NowPlaying.this, "This is a message: Skip", Toast.LENGTH_LONG).show();
         }
     }

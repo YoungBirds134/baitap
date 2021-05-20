@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/title_thuvien"
+        app:layout_constraintTop_toBottomOf="@id/title_Name_Top"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingStart="20dp"
