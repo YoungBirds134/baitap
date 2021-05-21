@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="122dp"
-        android:background="@color/HeavyPink">
+        android:background="@color/BackwardColorHeavy">
 
 
         <Button
@@ -85,9 +85,7 @@
             tools:text="KYLE." />
 
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_thuvien"

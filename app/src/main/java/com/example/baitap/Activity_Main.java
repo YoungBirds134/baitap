@@ -38,13 +38,13 @@ public class Activity_Main extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_thuVien);
 
-        menu_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        menu_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Activity_Main.this, MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
 

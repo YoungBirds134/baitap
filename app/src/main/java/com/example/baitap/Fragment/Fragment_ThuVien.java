@@ -41,18 +41,19 @@ import java.util.ArrayList;
 import static android.media.AudioManager.STREAM_MUSIC;
 
 public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener {
-TextView textView_Name_Top,textView_Artist_Top;
+    TextView textView_Name_Top, textView_Artist_Top;
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     ArrayList<Song> arrayList = new ArrayList<>();
     Context context;
     String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
     String url_image = "https://huychimnonblog.000webhostapp.com/image/";
-    ImageView imageView,imageView_Top;
+    ImageView imageView, imageView_Top;
     Song song = new Song();
+    MediaPlayer mediaPlayer = new MediaPlayer();
+    Button btnPlay, btnSkip_Top;
+    Uri uri;
 
-Button btnPlay,btnSkip_Top;
-Uri uri;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +66,12 @@ Uri uri;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
-        imageView_Top=view.findViewById(R.id.txt_image);
-textView_Name_Top=view.findViewById(R.id.title_Name_Top);
-textView_Artist_Top=view.findViewById(R.id.title_Artist_Top);
-btnSkip_Top=view.findViewById(R.id.btnSkip_Top);
+        imageView_Top = view.findViewById(R.id.txt_image);
+        textView_Name_Top = view.findViewById(R.id.title_Name_Top);
+        textView_Artist_Top = view.findViewById(R.id.title_Artist_Top);
+        btnSkip_Top = view.findViewById(R.id.btnSkip_Top);
 //arrayList=initSong();
-        btnPlay=view.findViewById(R.id.btnPlay_Top);
+        btnPlay = view.findViewById(R.id.btnPlay_Top);
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
         recyclerView.setAdapter(adapter_recycleView_song_thuVien);
@@ -129,6 +130,7 @@ btnSkip_Top=view.findViewById(R.id.btnSkip_Top);
 
     }
 
+
     @Override
     public void onItemClick(int position) {
         song = arrayList.get(position);
@@ -136,23 +138,39 @@ btnSkip_Top=view.findViewById(R.id.btnSkip_Top);
         textView_Artist_Top.setText(arrayList.get(position).getName_Artist());
 
         Picasso.with(context).load(url_image + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView_Top);
-        MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), Uri.parse(song.getPath()));
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
+//        MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), Uri.parse(song.getPath()));
+//        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//
+//                if (mp.isPlaying()) {
+//                    mp.stop();
+//
+//                    mp.release();
+//                } else {
+//                    mp.start();
+//                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
+//                }
+//
+//
+//            }
+//        });
 
-                if (mp.isPlaying()) {
-                    mp.stop();
 
-                    mp.release();
-                } else {
-                    mp.start();
-                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                }
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mediaPlayer.setDataSource(getContext(),Uri.parse(song.getPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
+        btnPlay.setBackgroundResource(R.drawable.ic_pause);
 
-
-            }
-        });
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,28 +192,27 @@ btnSkip_Top=view.findViewById(R.id.btnSkip_Top);
                 }
             }
         });
-btnSkip_Top.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-           if (position<= arrayList.size())
-           {
-               uri = Uri.parse(arrayList.get(position+1).getPath());
-           }
+        btnSkip_Top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    if (position <= arrayList.size()) {
+                        uri = Uri.parse(arrayList.get(position + 1).getPath());
+                    }
 
 
-            mediaPlayer.start();
-            btnPlay.setBackgroundResource(R.drawable.ic_pause);
-        } else {
-            Toast.makeText(getContext(), "" + uri, Toast.LENGTH_LONG).show();
-        }
+                    mediaPlayer.start();
+                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                } else {
+                    Toast.makeText(getContext(), "" + uri, Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
 
     }
-});
-    }
-
-
 }
 
