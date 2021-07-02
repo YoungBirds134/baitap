@@ -11,6 +11,7 @@
     tools:context=".Activity_Main">
 
     <TextView
+        android:id="@+id/txt_nameSongPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -21,6 +22,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/txt_nameArtist_Playing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -30,6 +32,7 @@
         android:textSize="18sp" />
 
     <ImageView
+        android:id="@+id/image__Now_Playing"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginTop="30dp"

@@ -1,6 +1,7 @@
 package com.example.baitap.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -9,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,9 +28,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
+import com.example.baitap.util.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -44,14 +49,16 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     TextView textView_Name_Top, textView_Artist_Top;
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
-    ArrayList<Song> arrayList = new ArrayList<>();
+    public static ArrayList<Song> arrayList = new ArrayList<>();
+    public static ArrayList<Song> arrayList_lovesong = new ArrayList<>();
     Context context;
-    String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
-    String url_image = "https://huychimnonblog.000webhostapp.com/image/";
+    public static String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
+    public static String url_image = "https://huychimnonblog.000webhostapp.com/image/";
     ImageView imageView, imageView_Top;
-    Song song = new Song();
-    MediaPlayer mediaPlayer = new MediaPlayer();
+    public static Song song = new Song();
+    public static MediaPlayer mediaPlayer = new MediaPlayer();
     Button btnPlay, btnSkip_Top;
+    ToggleButton   button_loveSong;
     Uri uri;
 
     @Override
@@ -65,29 +72,58 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
+        ToggleButton   button_loveSong=(ToggleButton)view.findViewById(R.id.favBtn);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
         imageView_Top = view.findViewById(R.id.txt_image);
         textView_Name_Top = view.findViewById(R.id.title_Name_Top);
         textView_Artist_Top = view.findViewById(R.id.title_Artist_Top);
         btnSkip_Top = view.findViewById(R.id.btnSkip_Top);
-//arrayList=initSong();
+
         btnPlay = view.findViewById(R.id.btnPlay_Top);
+
+
+
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
         recyclerView.setAdapter(adapter_recycleView_song_thuVien);
         adapter_recycleView_song_thuVien.setOnItemClickListener(Fragment_ThuVien.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
         get_Songs();
+
+
+
+
+
         return view;
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(getContext(), "Mua thành công", Toast.LENGTH_LONG).show();
+        if (button_loveSong == null) {
+            Toast.makeText(getContext(), " loi button toggle", Toast.LENGTH_LONG).show();
+        }
+        try {
+            button_loveSong.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        Toast.makeText(getContext(), " công", Toast.LENGTH_LONG).show();
+                    } else {
+                        // The toggle is disabled
+                    }
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(getContext(), ""+e, Toast.LENGTH_LONG).show();
+        }
 
     }
+public void get_LoveSong(){
 
+       
+    }
     public ArrayList<Song> initSong() {
         ArrayList<Song> arrayList = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
@@ -115,7 +151,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
                 adapter_recycleView_song_thuVien.notifyDataSetChanged();
                 for (int i = 0; i < 1; i++) {
-                    Toast.makeText(getContext(), "Load Success", Toast.LENGTH_LONG).show();
+
                 }
             }
         };
@@ -138,80 +174,37 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
         textView_Artist_Top.setText(arrayList.get(position).getName_Artist());
 
         Picasso.with(context).load(url_image + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView_Top);
-//        MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), Uri.parse(song.getPath()));
-//        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mp) {
+
+
+        Intent i = new Intent(getContext(), Activity_NowPlaying.class);
+        i.putExtra("MaBaiHat", arrayList.get(position).getId_Song());
+        i.putExtra("TenBaiHat", arrayList.get(position).getName_Song());
+        i.putExtra("TenCaSi", arrayList.get(position).getName_Artist());
+        i.putExtra("ThoiGian", arrayList.get(position).getDuration());
+        i.putExtra("HinhAnh", arrayList.get(position).getImage_Song());
+        i.putExtra("Link", arrayList.get(position).getPath());
+
+        getContext().startActivity(i);
+
+
 //
-//                if (mp.isPlaying()) {
-//                    mp.stop();
+
+
+//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//        try {
+//            mediaPlayer.setDataSource(getContext(), Uri.parse(song.getPath()));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            mediaPlayer.prepare();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        mediaPlayer.start();
+//        btnPlay.setBackgroundResource(R.drawable.ic_pause);
 //
-//                    mp.release();
-//                } else {
-//                    mp.start();
-//                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
-//                }
 //
-//
-//            }
-//        });
-
-
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            mediaPlayer.setDataSource(getContext(),Uri.parse(song.getPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            mediaPlayer.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mediaPlayer.start();
-        btnPlay.setBackgroundResource(R.drawable.ic_pause);
-
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (view.getId() == R.id.btnPlay_Top) {
-                    if (mediaPlayer.isPlaying()) {
-                        // is playing
-                        mediaPlayer.pause();
-                        btnPlay.setBackgroundResource(R.drawable.ic_play);
-                    } else {
-                        // on pause
-                        mediaPlayer.start();
-                        btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                    }
-                } else if (view.getId() == R.id.btnPre) {
-                    Toast.makeText(getContext(), "This is a message: Pre", Toast.LENGTH_LONG).show();
-                } else if (view.getId() == R.id.btnSkip_Top) {
-                    Toast.makeText(getContext(), "This is a message: Skip", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        btnSkip_Top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    if (position <= arrayList.size()) {
-                        uri = Uri.parse(arrayList.get(position + 1).getPath());
-                    }
-
-
-                    mediaPlayer.start();
-                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                } else {
-                    Toast.makeText(getContext(), "" + uri, Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-
 
     }
 }

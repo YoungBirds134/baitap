@@ -1,15 +1,24 @@
 package com.example.baitap;
 
+import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.baitap.Fragment.Fragment_ThuVien;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 public class Activity_NowPlaying extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,8 +28,9 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     TextView tvTime, tvDuration;
     SeekBar seekBarTime, seekBarVolume;
     Button btnPlay, btnPre, btnSkip;
-
-    MediaPlayer musicPlayer;
+    public static MediaPlayer musicPlayer;
+    int maBaiHat;
+    String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,9 +38,19 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_nowplaying);
 
 
+        Intent intent = getIntent();
+        maBaiHat = intent.getIntExtra("MaBaiHat", 1);
+        tenBaiHat = intent.getStringExtra("TenBaiHat");
+        tenCaSi = intent.getStringExtra("TenCaSi");
+        thoiGian = intent.getStringExtra("ThoiGian");
+        hinhAnh = intent.getStringExtra("HinhAnh");
+        link = intent.getStringExtra("Link");
+
+
         // hide the actionbar
+        TextView txt_NameSong, txt_NameArtist;
 
-
+        ImageView imageView = findViewById(R.id.image__Now_Playing);
         tvTime = findViewById(R.id.tvTime);
         tvDuration = findViewById(R.id.tvDuration);
         seekBarTime = findViewById(R.id.seekBarTime);
@@ -39,13 +59,36 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         btnPre = findViewById(R.id.btnPre);
         btnSkip = findViewById(R.id.btnSkip_Top);
 
-        musicPlayer = MediaPlayer.create(this, R.raw.gustixa_lemon_tree_);
+        txt_NameSong = findViewById(R.id.txt_nameSongPlaying);
+        txt_NameSong.setText(tenBaiHat);
+        txt_NameArtist = findViewById(R.id.txt_nameArtist_Playing);
+        txt_NameArtist.setText(tenCaSi);
+        Picasso.with(this).load(Fragment_ThuVien.url_image + hinhAnh).placeholder(R.drawable.music_empty).into(imageView);
+
+//        Toast.makeText(this, "" + thoiGian, Toast.LENGTH_LONG).show();
+
+
+        musicPlayer = MediaPlayer.create(this, Uri.parse(link));
+//        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//        try {
+//            musicPlayer.setDataSource(this, Uri.parse(link));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            musicPlayer.prepare();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        musicPlayer.start();
+
+
         musicPlayer.setLooping(true);
         musicPlayer.seekTo(0);
         musicPlayer.setVolume(0.5f, 0.5f);
 
-        String duration = millisecondsToString(musicPlayer.getDuration());
-        tvDuration.setText(duration);
+//        thoiGian = millisecondsToString(musicPlayer.getDuration());
+        tvDuration.setText(thoiGian);
 
         btnPlay.setOnClickListener(this);
         btnPre.setOnClickListener(this);
@@ -137,6 +180,8 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
+
+
         if (view.getId() == R.id.btnPlay_Top) {
             if (musicPlayer.isPlaying()) {
                 // is playing
@@ -150,6 +195,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         } else if (view.getId() == R.id.btnPre) {
             Toast.makeText(Activity_NowPlaying.this, "This is a message: Pre", Toast.LENGTH_LONG).show();
         } else if (view.getId() == R.id.btnSkip_Top) {
+
             Toast.makeText(Activity_NowPlaying.this, "This is a message: Skip", Toast.LENGTH_LONG).show();
         }
     }
