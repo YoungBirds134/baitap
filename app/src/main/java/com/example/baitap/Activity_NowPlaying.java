@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.baitap.Fragment.Fragment_ThuVien;
+import com.example.baitap.Model.Song;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     Button btnPlay, btnPre, btnSkip;
     public static MediaPlayer musicPlayer;
     int maBaiHat;
-   public static String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
+    public static String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +70,13 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
 
         musicPlayer = MediaPlayer.create(this, Uri.parse(link));
+        if(musicPlayer.isPlaying()){
+            musicPlayer.pause();
+        }
+            musicPlayer.start();
+            btnPlay.setBackgroundResource(R.drawable.ic_pause);
+
+
 //        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 //        try {
 //            musicPlayer.setDataSource(this, Uri.parse(link));
@@ -81,7 +89,6 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 //            e.printStackTrace();
 //        }
 //        musicPlayer.start();
-
 
         musicPlayer.setLooping(true);
         musicPlayer.seekTo(0);

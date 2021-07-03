@@ -61,7 +61,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     public static Song song = new Song();
     public static MediaPlayer mediaPlayer = new MediaPlayer();
     Button btnPlay, btnSkip_Top;
-    ToggleButton   button_loveSong;
+
     Uri uri;
 
     @Override

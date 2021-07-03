@@ -7,6 +7,15 @@
     android:orientation="vertical"
     android:background="@color/white">
 
+    <Button
+        android:id="@+id/btn_playing_all_thuvien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:textColor="@color/roseEnd"
+        android:textSize="20dp"
+        tools:text="Playing All" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_thuvien"
         android:layout_width="match_parent"
