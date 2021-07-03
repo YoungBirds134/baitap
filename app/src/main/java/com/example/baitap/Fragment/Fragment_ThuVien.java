@@ -2,6 +2,7 @@ package com.example.baitap.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -44,6 +45,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.media.AudioManager.STREAM_MUSIC;
 
 public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener {
@@ -108,10 +110,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
 
     }
-public void get_LoveSong(){
 
-       
-    }
     public ArrayList<Song> initSong() {
         ArrayList<Song> arrayList = new ArrayList<>();
         for (int i = 1; i < 10; i++) {

@@ -1,10 +1,12 @@
 package com.example.baitap.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baitap.Activity_Main;
+import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_LoveSongs;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.Model.Song;
@@ -20,7 +23,7 @@ import com.example.baitap.R;
 
 import java.util.ArrayList;
 
-public class Fragment_LoveSongs extends Fragment {
+public class Fragment_LoveSongs extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener, Adapter_RecycleView_Song_LoveSongs.OnItemClickListener {
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_LoveSongs adapter_recycleView_song_loveSongs;
     ArrayList<Song> arrayList = new ArrayList<>();
@@ -36,12 +39,18 @@ public class Fragment_LoveSongs extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_loveSongs = new Adapter_RecycleView_Song_LoveSongs(Activity_Main.arrayList_lovesong, getContext());
         recyclerView.setAdapter(adapter_recycleView_song_loveSongs);
-
+        adapter_recycleView_song_loveSongs.setOnItemClickListener(Fragment_LoveSongs.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false)); return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void onItemClick(int position) {
+        Song song = Activity_Main.arrayList_lovesong.get(position);
+        Toast.makeText(getContext(), " Fail ==" + song.getName_Song(), Toast.LENGTH_SHORT).show();
+
     }
 }

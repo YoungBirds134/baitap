@@ -6,14 +6,17 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.baitap.Activity_Main;
 import com.example.baitap.Fragment.Fragment_LoveSongs;
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
@@ -53,6 +56,22 @@ public class Adapter_RecycleView_Song_LoveSongs extends RecyclerView.Adapter<Ada
         holder.textView_Name.setText(arrayList.get(position).getName_Song());
         holder.textView_Des.setText(arrayList.get(position).getName_Artist());
         Picasso.with(context).load(url + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(holder.imageView_Song);
+
+        holder.favBtn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                for (int i = 0; i< Activity_Main.arrayList_lovesong.size(); i++){
+//                    if (Activity_Main.arrayList_lovesong.get(i).getId_Song() == arrayList.get(position).getId_Song())
+//                    {
+//                        Activity_Main.arrayList_lovesong.remove(i);
+//                    }
+//                    Toast.makeText(context, " Remove success: " +" "+ Activity_Main.arrayList_lovesong.get(i).getName_Song(), Toast.LENGTH_SHORT).show();
+//                }
+                arrayList.remove(song);
+                Toast.makeText(context, " Remove success: " +" "+ song.getName_Song(), Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -65,17 +84,18 @@ public class Adapter_RecycleView_Song_LoveSongs extends RecyclerView.Adapter<Ada
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(Adapter_RecycleView_Song_LoveSongs.OnItemClickListener Listener) {
+    public void setOnItemClickListener(OnItemClickListener Listener) {
         this.mOnItemClickListener = Listener;
     }
+
 
 
     public class SongHolder extends RecyclerView.ViewHolder {
 
         TextView textView_Name;
         TextView textView_Des;
+        Button favBtn_remove;
 
-        ToggleButton favBtn;
         ImageView imageView_Song;
         TextView number;
 
@@ -84,10 +104,10 @@ public class Adapter_RecycleView_Song_LoveSongs extends RecyclerView.Adapter<Ada
             textView_Name = (TextView) itemView.findViewById(R.id.item_album_view_title);
             textView_Des = (TextView) itemView.findViewById(R.id.item_album_view_aritst);
             imageView_Song = itemView.findViewById(R.id.item_album_view_image);
-            favBtn = itemView.findViewById(R.id.favBtn);
+
             number = itemView.findViewById(R.id.number);
 
-
+favBtn_remove=itemView.findViewById(R.id.favBtn_Remove);
 
 
             //add to fav btn
