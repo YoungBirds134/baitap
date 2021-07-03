@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.baitap.Activity_Main;
 import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.Model.Song;
@@ -50,7 +51,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     public static ArrayList<Song> arrayList = new ArrayList<>();
-    public static ArrayList<Song> arrayList_lovesong = new ArrayList<>();
+
     Context context;
     public static String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
     public static String url_image = "https://huychimnonblog.000webhostapp.com/image/";
@@ -72,7 +73,8 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
-        ToggleButton   button_loveSong=(ToggleButton)view.findViewById(R.id.favBtn);
+
+
         btnPlay = view.findViewById(R.id.btnPlay_Top);
         imageView_Top = view.findViewById(R.id.txt_image);
         textView_Name_Top = view.findViewById(R.id.title_Name_Top);
@@ -101,23 +103,9 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(getContext(), "Mua thành công", Toast.LENGTH_LONG).show();
-        if (button_loveSong == null) {
-            Toast.makeText(getContext(), " loi button toggle", Toast.LENGTH_LONG).show();
-        }
-        try {
-            button_loveSong.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        Toast.makeText(getContext(), " công", Toast.LENGTH_LONG).show();
-                    } else {
-                        // The toggle is disabled
-                    }
-                }
-            });
-        } catch (Exception e){
-            Toast.makeText(getContext(), ""+e, Toast.LENGTH_LONG).show();
-        }
+
+
+
 
     }
 public void get_LoveSong(){
@@ -170,13 +158,11 @@ public void get_LoveSong(){
     @Override
     public void onItemClick(int position) {
         song = arrayList.get(position);
-        textView_Name_Top.setText(arrayList.get(position).getName_Song());
-        textView_Artist_Top.setText(arrayList.get(position).getName_Artist());
 
-        Picasso.with(context).load(url_image + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView_Top);
 
 
         Intent i = new Intent(getContext(), Activity_NowPlaying.class);
+
         i.putExtra("MaBaiHat", arrayList.get(position).getId_Song());
         i.putExtra("TenBaiHat", arrayList.get(position).getName_Song());
         i.putExtra("TenCaSi", arrayList.get(position).getName_Artist());

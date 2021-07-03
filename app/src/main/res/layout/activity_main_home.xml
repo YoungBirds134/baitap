@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:paddingTop="10dp"
+
     tools:context=".Activity_Main">
 
 
@@ -32,6 +32,59 @@
 
 <!--    </RelativeLayout>-->
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/BackwardColorHeavy"
+        tools:ignore="MissingConstraints"
+        >
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/txt_image"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:src="@drawable/music_empty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_border_color="#66F5F5F5"
+            app:riv_border_width="1dp"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/title_Name_Top"
+            android:layout_width="307dp"
+            android:layout_height="27dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/FlatWhite"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/title_Artist_Top"
+            app:layout_constraintEnd_toStartOf="@id/menu_button"
+            app:layout_constraintStart_toEndOf="@+id/txt_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+
+            tools:text="Blame" />
+
+        <TextView
+            android:id="@+id/title_Artist_Top"
+            android:layout_width="271dp"
+            android:layout_height="25dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#CCF5F5F5"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/menu_button"
+            app:layout_constraintStart_toEndOf="@+id/txt_image"
+            app:layout_constraintTop_toBottomOf="@id/title_Name_Top"
+            tools:text="KYLE." />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view_thuvien"
 
@@ -49,7 +102,8 @@
         android:id="@+id/nav_fragment_thuvien"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+android:layout_marginTop="64dp"
+        android:layout_marginBottom="58dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

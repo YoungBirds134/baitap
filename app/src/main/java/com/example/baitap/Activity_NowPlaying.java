@@ -30,7 +30,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     Button btnPlay, btnPre, btnSkip;
     public static MediaPlayer musicPlayer;
     int maBaiHat;
-    String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
+   public static String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
