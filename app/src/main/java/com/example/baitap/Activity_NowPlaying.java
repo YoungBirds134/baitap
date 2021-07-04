@@ -69,26 +69,31 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 //        Toast.makeText(this, "" + thoiGian, Toast.LENGTH_LONG).show();
 
 
-        musicPlayer = MediaPlayer.create(this, Uri.parse(link));
-        if(musicPlayer.isPlaying()){
-            musicPlayer.pause();
+//        musicPlayer = MediaPlayer.create(this, Uri.parse(link));
+
+
+        musicPlayer = new MediaPlayer();
+        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        if (musicPlayer.isPlaying()) {
+            musicPlayer.stop();
         }
-            musicPlayer.start();
-            btnPlay.setBackgroundResource(R.drawable.ic_pause);
+        try {
+            musicPlayer.setDataSource(link);
+            musicPlayer.prepareAsync();
+            musicPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    if (mp.isPlaying()) {
+                        mp.stop();
+                    }
+                    mp.start();
+                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-//        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//        try {
-//            musicPlayer.setDataSource(this, Uri.parse(link));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            musicPlayer.prepare();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        musicPlayer.start();
 
         musicPlayer.setLooping(true);
         musicPlayer.seekTo(0);

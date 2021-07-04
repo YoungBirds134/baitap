@@ -60,7 +60,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     ImageView imageView, imageView_Top;
     public static Song song = new Song();
     public static MediaPlayer mediaPlayer = new MediaPlayer();
-    Button btnPlay, btnSkip_Top;
+    Button btnPlay, btnSkip_Top,btn_PlayAll;
 
     Uri uri;
 
@@ -76,7 +76,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
 
-
+btn_PlayAll=view.findViewById(R.id.btn_playing_all_thuvien);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
         imageView_Top = view.findViewById(R.id.txt_image);
         textView_Name_Top = view.findViewById(R.id.title_Name_Top);
