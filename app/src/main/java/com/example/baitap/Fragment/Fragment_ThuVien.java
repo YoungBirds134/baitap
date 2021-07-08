@@ -2,20 +2,15 @@ package com.example.baitap.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,24 +24,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.baitap.Activity_Main;
 import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
-import com.example.baitap.util.MainActivity;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
-import static android.media.AudioManager.STREAM_MUSIC;
 
 public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener {
     TextView textView_Name_Top, textView_Artist_Top;
@@ -59,8 +46,8 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     public static String url_image = "https://huychimnonblog.000webhostapp.com/image/";
     ImageView imageView, imageView_Top;
     public static Song song = new Song();
-    public static MediaPlayer mediaPlayer = new MediaPlayer();
-    Button btnPlay, btnSkip_Top,btn_PlayAll;
+
+    Button btnPlay, btnSkip_Top, btn_PlayAll;
 
     Uri uri;
 
@@ -76,7 +63,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
 
-btn_PlayAll=view.findViewById(R.id.btn_playing_all_thuvien);
+        btn_PlayAll = view.findViewById(R.id.btn_playing_all_thuvien);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
         imageView_Top = view.findViewById(R.id.txt_image);
         textView_Name_Top = view.findViewById(R.id.title_Name_Top);
@@ -86,7 +73,6 @@ btn_PlayAll=view.findViewById(R.id.btn_playing_all_thuvien);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
 
 
-
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
         recyclerView.setAdapter(adapter_recycleView_song_thuVien);
@@ -94,8 +80,22 @@ btn_PlayAll=view.findViewById(R.id.btn_playing_all_thuvien);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         get_Songs();
 
+        btn_PlayAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Activity_NowPlaying.class);
+                try {
+                    if (Activity_NowPlaying.musicPlayer!=null){
+                        Activity_NowPlaying.musicPlayer.stop();
+                        Activity_NowPlaying.musicPlayer.release();
+                    }
+                } catch (Exception e){
 
+                }
 
+                startActivity(intent);
+            }
+        });
 
 
         return view;
@@ -105,8 +105,6 @@ btn_PlayAll=view.findViewById(R.id.btn_playing_all_thuvien);
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
 
 
     }
@@ -159,15 +157,20 @@ btn_PlayAll=view.findViewById(R.id.btn_playing_all_thuvien);
         song = arrayList.get(position);
 
 
-
         Intent i = new Intent(getContext(), Activity_NowPlaying.class);
-
+i.putExtra("Position",position);
         i.putExtra("MaBaiHat", arrayList.get(position).getId_Song());
         i.putExtra("TenBaiHat", arrayList.get(position).getName_Song());
         i.putExtra("TenCaSi", arrayList.get(position).getName_Artist());
         i.putExtra("ThoiGian", arrayList.get(position).getDuration());
         i.putExtra("HinhAnh", arrayList.get(position).getImage_Song());
         i.putExtra("Link", arrayList.get(position).getPath());
+        try {
+            if (Activity_NowPlaying.musicPlayer!=null){
+                Activity_NowPlaying.musicPlayer.stop();
+                Activity_NowPlaying.musicPlayer.release();
+            }
+        } catch (Exception e ){}
 
         getContext().startActivity(i);
 

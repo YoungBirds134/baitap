@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.baitap.Fragment.Fragment_ThuVien;
-import com.example.baitap.Model.Song;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -30,7 +29,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     SeekBar seekBarTime, seekBarVolume;
     Button btnPlay, btnPre, btnSkip;
     public static MediaPlayer musicPlayer;
-    int maBaiHat;
+    int maBaiHat, viTriBaiHat;
     public static String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
 
     @Override
@@ -40,6 +39,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
 
         Intent intent = getIntent();
+        viTriBaiHat = intent.getIntExtra("Position", 0);
         maBaiHat = intent.getIntExtra("MaBaiHat", 1);
         tenBaiHat = intent.getStringExtra("TenBaiHat");
         tenCaSi = intent.getStringExtra("TenCaSi");
@@ -61,10 +61,10 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         btnSkip = findViewById(R.id.btnSkip_Top);
 
         txt_NameSong = findViewById(R.id.txt_nameSongPlaying);
-        txt_NameSong.setText(tenBaiHat);
-        txt_NameArtist = findViewById(R.id.txt_nameArtist_Playing);
-        txt_NameArtist.setText(tenCaSi);
-        Picasso.with(this).load(Fragment_ThuVien.url_image + hinhAnh).placeholder(R.drawable.music_empty).into(imageView);
+        txt_NameSong.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
+        txt_NameArtist = findViewById(R.id.txt_nameArtist_Playing1);
+        txt_NameArtist.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
+        Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
 
 //        Toast.makeText(this, "" + thoiGian, Toast.LENGTH_LONG).show();
 
@@ -74,11 +74,9 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
         musicPlayer = new MediaPlayer();
         musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        if (musicPlayer.isPlaying()) {
-            musicPlayer.stop();
-        }
+
         try {
-            musicPlayer.setDataSource(link);
+            musicPlayer.setDataSource(String.valueOf(Uri.parse(Fragment_ThuVien.arrayList.get(viTriBaiHat).getPath())));
             musicPlayer.prepareAsync();
             musicPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -100,7 +98,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         musicPlayer.setVolume(0.5f, 0.5f);
 
 //        thoiGian = millisecondsToString(musicPlayer.getDuration());
-        tvDuration.setText(thoiGian);
+        tvDuration.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getDuration());
 
         btnPlay.setOnClickListener(this);
         btnPre.setOnClickListener(this);
