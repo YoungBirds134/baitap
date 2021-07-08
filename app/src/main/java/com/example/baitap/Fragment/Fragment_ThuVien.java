@@ -28,6 +28,7 @@ import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +41,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     public static ArrayList<Song> arrayList = new ArrayList<>();
-
+    String tenBaiHat_Top, tenCaSi_Top,hinhAnh_Top;
     Context context;
     public static String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
     public static String url_image = "https://huychimnonblog.000webhostapp.com/image/";
@@ -71,7 +72,23 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
         btnSkip_Top = view.findViewById(R.id.btnSkip_Top);
 
         btnPlay = view.findViewById(R.id.btnPlay_Top);
+//Top Thông Tin Bài Hát Now Playing
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            tenBaiHat_Top = bundle.getString("TenBaiHat_Top");
+            tenCaSi_Top = bundle.getString("TenCaSix_Top");
+            hinhAnh_Top = bundle.getString(" HinhAnh_Top ");
+        }
+        if (tenCaSi_Top==null && tenBaiHat_Top==null && hinhAnh_Top==null){
+        Toast.makeText(getContext(),"Loi load"+tenBaiHat_Top + " " + tenCaSi_Top,Toast.LENGTH_LONG).show();
+        }else {
+        textView_Name_Top.setText(tenBaiHat_Top);
+        textView_Artist_Top.setText(tenCaSi_Top);
+        Picasso.with(getContext()).load(url_image + hinhAnh_Top).placeholder(R.drawable.music_empty).into(imageView);
+        }
 
+
+        //Top Thông Tin Bài Hát Now Playing
 
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
@@ -85,11 +102,11 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Activity_NowPlaying.class);
                 try {
-                    if (Activity_NowPlaying.musicPlayer!=null){
+                    if (Activity_NowPlaying.musicPlayer != null) {
                         Activity_NowPlaying.musicPlayer.stop();
-                        Activity_NowPlaying.musicPlayer.release();
+
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -158,7 +175,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
 
         Intent i = new Intent(getContext(), Activity_NowPlaying.class);
-i.putExtra("Position",position);
+        i.putExtra("Position", position);
         i.putExtra("MaBaiHat", arrayList.get(position).getId_Song());
         i.putExtra("TenBaiHat", arrayList.get(position).getName_Song());
         i.putExtra("TenCaSi", arrayList.get(position).getName_Artist());
@@ -166,12 +183,14 @@ i.putExtra("Position",position);
         i.putExtra("HinhAnh", arrayList.get(position).getImage_Song());
         i.putExtra("Link", arrayList.get(position).getPath());
         try {
-            if (Activity_NowPlaying.musicPlayer!=null){
+            if (Activity_NowPlaying.musicPlayer != null) {
                 Activity_NowPlaying.musicPlayer.stop();
-                Activity_NowPlaying.musicPlayer.release();
-            }
-        } catch (Exception e ){}
 
+            }
+        } catch (Exception e) {
+        }
+        textView_Name_Top.setText(arrayList.get(position).getName_Song());
+        textView_Artist_Top.setText(arrayList.get(position).getName_Artist());
         getContext().startActivity(i);
 
 

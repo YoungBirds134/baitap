@@ -24,13 +24,15 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
 
     // views declartion
-
+    public static TextView txt_NameSong, txt_NameArtist;
     TextView tvTime, tvDuration;
     SeekBar seekBarTime, seekBarVolume;
     Button btnPlay, btnPre, btnSkip;
     public static MediaPlayer musicPlayer;
     int maBaiHat, viTriBaiHat;
     public static String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
+    ImageView imageView;
+    TextView textView_Name_Top, textView_Artist_Top;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,9 +51,11 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
 
         // hide the actionbar
-        TextView txt_NameSong, txt_NameArtist;
+        textView_Name_Top = findViewById(R.id.title_Name_Top);
+        textView_Artist_Top = findViewById(R.id.title_Artist_Top);
 
-        ImageView imageView = findViewById(R.id.image__Now_Playing);
+
+        imageView = findViewById(R.id.image__Now_Playing);
         tvTime = findViewById(R.id.tvTime);
         tvDuration = findViewById(R.id.tvDuration);
         seekBarTime = findViewById(R.id.seekBarTime);
@@ -67,30 +71,48 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
 
 //        Toast.makeText(this, "" + thoiGian, Toast.LENGTH_LONG).show();
+try {
+    textView_Name_Top.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
+    textView_Artist_Top.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
+}catch (Exception e){}
 
-
-//        musicPlayer = MediaPlayer.create(this, Uri.parse(link));
-
-
-        musicPlayer = new MediaPlayer();
-        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
+        KhoiTaoMusicPlayer();
         try {
-            musicPlayer.setDataSource(String.valueOf(Uri.parse(Fragment_ThuVien.arrayList.get(viTriBaiHat).getPath())));
-            musicPlayer.prepareAsync();
-            musicPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    if (mp.isPlaying()) {
-                        mp.stop();
-                    }
-                    mp.start();
-                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+            musicPlayer.start();
+            btnPlay.setBackgroundResource(R.drawable.ic_pause);
+        } catch (Exception e) {
+
         }
+//Gửi dữ liệu đến fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("TenBaiHat_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
+        bundle.putString("TenCaSi_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
+        bundle.putString("HinhAnh_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song());
+        Fragment_ThuVien fragment_thuVien = new Fragment_ThuVien();
+        fragment_thuVien.setArguments(bundle);
+        //Gửi dữ liệu đến fragment
+
+
+
+//        musicPlayer = new MediaPlayer();
+//        musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//
+//        try {
+//            musicPlayer.setDataSource(String.valueOf(Uri.parse(Fragment_ThuVien.arrayList.get(viTriBaiHat).getPath())));
+//            musicPlayer.prepareAsync();
+//            musicPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                @Override
+//                public void onPrepared(MediaPlayer mp) {
+//                    if (mp.isPlaying()) {
+//                        mp.stop();
+//                    }
+//                    mp.start();
+//                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
+//                }
+//            });
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         musicPlayer.setLooping(true);
@@ -203,10 +225,38 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
                 btnPlay.setBackgroundResource(R.drawable.ic_pause);
             }
         } else if (view.getId() == R.id.btnPre) {
-            Toast.makeText(Activity_NowPlaying.this, "This is a message: Pre", Toast.LENGTH_LONG).show();
-        } else if (view.getId() == R.id.btnSkip_Top) {
+            viTriBaiHat--;
 
-            Toast.makeText(Activity_NowPlaying.this, "This is a message: Skip", Toast.LENGTH_LONG).show();
+            if (viTriBaiHat<0) {
+                viTriBaiHat = 0;
+            }
+            if (musicPlayer.isPlaying()) {
+                musicPlayer.stop();
+            }
+            KhoiTaoMusicPlayer();
+            musicPlayer.start();
+        } else if (view.getId() == R.id.btnSkip_Top) {
+            viTriBaiHat++;
+
+            if (viTriBaiHat == Fragment_ThuVien.arrayList.size()) {
+                viTriBaiHat = 0;
+            }
+            if (musicPlayer.isPlaying()) {
+                musicPlayer.stop();
+            }
+            KhoiTaoMusicPlayer();
+            musicPlayer.start();
+
         }
     }
+
+    private void KhoiTaoMusicPlayer() {
+
+        musicPlayer = MediaPlayer.create(this, Uri.parse(Fragment_ThuVien.arrayList.get(viTriBaiHat).getPath()));
+        txt_NameSong.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
+        tvDuration.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getDuration());
+        txt_NameArtist.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
+        Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
+    }
+
 }
