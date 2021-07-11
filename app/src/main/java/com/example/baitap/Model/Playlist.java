@@ -18,4 +18,9 @@ public class Playlist implements Serializable {
     public String getName_Playlist() {
         return name_Playlist;
     }
+
+    @Override
+    public String toString() {
+        return  name_Playlist ;
+    }
 }

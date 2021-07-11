@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_xoa_playlist_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Xóa"></Button>
+
+    <Button
+        android:id="@+id/btn_Huy_playlist_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_xoa_playlist_song"
+        android:layout_marginTop="10dp"
+        android:text="Hủy"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"></Button>
+</RelativeLayout>

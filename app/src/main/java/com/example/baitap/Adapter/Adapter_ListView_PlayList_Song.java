@@ -1,8 +1,6 @@
 package com.example.baitap.Adapter;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.baitap.Activity_Song_Playlist;
 import com.example.baitap.DB.DB_Sqlite;
 import com.example.baitap.Model.Playlist;
+import com.example.baitap.Model.Song;
 import com.example.baitap.Model.Song_Playlist;
 import com.example.baitap.R;
+import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Adapter_RecycleView_Song_Playlist extends BaseAdapter {
-    Context context;
-    public static ArrayList<Playlist> arrayList;
-    ViewHolder viewHolder = null;
+public class Adapter_ListView_PlayList_Song extends BaseAdapter {
+    Activity_Song_Playlist context;
     DB_Sqlite dataBase;
+    ArrayList<Song_Playlist> arrayList;
+    Adapter_ListView_PlayList_Song.ViewHolder viewHolder = null;
+    String url = "https://huychimnonblog.000webhostapp.com/image/";
 
-    public Adapter_RecycleView_Song_Playlist(Context context, ArrayList<Playlist> arrayList) {
+    public Adapter_ListView_PlayList_Song(Activity_Song_Playlist context, ArrayList<Song_Playlist> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -55,7 +49,8 @@ public class Adapter_RecycleView_Song_Playlist extends BaseAdapter {
 
     public class ViewHolder {
         TextView txt_ten;
-        ImageView imageView_giohang;
+        ImageView imageView_hinh;
+Button button;
 
     }
 
@@ -65,16 +60,20 @@ public class Adapter_RecycleView_Song_Playlist extends BaseAdapter {
         if (view == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.item_playlist_child, null);
+            view = inflater.inflate(R.layout.item_songs_list_love, null);
 
-            viewHolder.txt_ten = view.findViewById(R.id.title_Name_Top_playlist);
-
-            viewHolder.imageView_giohang = view.findViewById(R.id.txt_image_playlist);
-
-            Playlist playlist = (Playlist) getItem(position);
-            viewHolder.txt_ten.setText(playlist.name_Playlist);
-            viewHolder.imageView_giohang.setImageResource(R.drawable.default_image2);
-
+            viewHolder.txt_ten = view.findViewById(R.id.item_album_view_title);
+            viewHolder.imageView_hinh = view.findViewById(R.id.item_album_view_image);
+            Song_Playlist song_playlist = (Song_Playlist) getItem(position);
+            viewHolder.txt_ten.setText(song_playlist.name_Song);
+            Picasso.with(context).load(url + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(viewHolder.imageView_hinh);
+viewHolder.button = view.findViewById(R.id.favBtn_Remove);
+viewHolder.button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+context.Dialog_Xoa(song_playlist.getId_Song());
+    }
+});
 
         }
         return view;

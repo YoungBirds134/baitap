@@ -37,6 +37,7 @@
         <activity android:name=".Activity_Search" />
         <activity android:name=".Activity_NowPlaying" />
         <activity android:name=".Demo" />
+        <activity android:name=".Activity_Song_Playlist" />
     </application>
 
 </manifest>

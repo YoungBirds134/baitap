@@ -1,10 +1,13 @@
 package com.example.baitap.Fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,8 @@ import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +34,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.baitap.Activity_Main;
 import com.example.baitap.Activity_NowPlaying;
+import com.example.baitap.Activity_Song_Playlist;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_Playlist;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
 import com.example.baitap.DB.DB_Sqlite;
 import com.example.baitap.Demo;
 import com.example.baitap.Model.Playlist;
 import com.example.baitap.Model.Song;
+import com.example.baitap.Model.Song_Playlist;
 import com.example.baitap.R;
 
 import org.json.JSONArray;
@@ -44,12 +51,13 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
-public class Fragment_PlayList extends Fragment implements Adapter_RecycleView_Song_Playlist.OnItemClickListener {
+public class Fragment_PlayList extends Fragment {
     ArrayList<Playlist> arrayList = new ArrayList<>();
     Button button;
     Adapter_RecycleView_Song_Playlist adapter_recycleView_song_playlist;
-    RecyclerView recyclerView;
-    DB_Sqlite dataBase;
+    ListView listView;
+    ImageView imageView;
+  public DB_Sqlite dataBase;
 
     @Override
 
@@ -63,18 +71,45 @@ public class Fragment_PlayList extends Fragment implements Adapter_RecycleView_S
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_playlist, container, false);
         button = view.findViewById(R.id.btn_Playlist);
-        recyclerView = view.findViewById(R.id.recycler_view_playlist);
-        adapter_recycleView_song_playlist = new Adapter_RecycleView_Song_Playlist(arrayList, getContext());
-        recyclerView.setAdapter(adapter_recycleView_song_playlist);
-        adapter_recycleView_song_playlist.setOnItemClickListener(Fragment_PlayList.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        listView = view.findViewById(R.id.recycler_view_playlist);
+        adapter_recycleView_song_playlist = new Adapter_RecycleView_Song_Playlist(getContext(), arrayList);
+        listView.setAdapter(adapter_recycleView_song_playlist);
 
         dataBase = new DB_Sqlite(getContext(), "music.sqlite", null, 1);
 
         dataBase.QueryData("CREATE TABLE IF NOT EXISTS playlist (id_playlist INTEGER" +
                 " PRIMARY KEY AUTOINCREMENT, name_playlist TEXT);");
+        dataBase.QueryData("CREATE TABLE IF NOT EXISTS \"songs\" (\n" +
+                "\t\"id_song\"\tinteger,\n" +
+                "\t\"name_song\"\tvarchar(20)\t,\n" +
+                "\t\"image_song\"\tvarchar(24)\t,\n" +
+                "\t\"duration\"\tTIME,\n" +
+
+
+                "\t\"link\"\tTEXT,\n" +
+                "\tPRIMARY KEY(\"id_song\" AUTOINCREMENT)\n" +
+                ");");
+        dataBase.QueryData("CREATE TABLE IF NOT EXISTS song_playlist (id_song_playlist INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "id_song INTEGER REFERENCES songs (id_song), id_playlist INTEGER REFERENCES playlist (id_playlist));");
 //ínert
-GetPlayList();
+        GetPlayList();
+
+listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+       Playlist playlist = arrayList.get(position);
+
+
+        Intent i = new Intent(getContext(), Activity_Song_Playlist.class);
+
+        i.putExtra("MaPlayList", playlist.id_Playlist);
+
+
+
+        getContext().startActivity(i);
+
+    }
+});
         /////Sqlite
 
 //
@@ -85,7 +120,7 @@ GetPlayList();
                 Dialog_Them();
             }
         });
-
+        Xoa_LongItem();
         return view;
     }
 
@@ -140,8 +175,34 @@ GetPlayList();
     }
 
 
-    @Override
-    public void onItemClick(int position) {
+    private void Xoa_LongItem() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Xác Nhận Xóa Playlist");
+                builder.setMessage("Bạn Chắc Chắn muốn xóa ?");
+                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dataBase.QueryData("DELETE FROM playlist  WHERE id_playlist='" + arrayList.get(position).getId_Playlist() + "'");
+                        GetPlayList();
+                        Toast.makeText(getContext(), "Đã Xóa Thành Công", Toast.LENGTH_SHORT).show();
 
+                    }
+                });
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GetPlayList();
+
+                    }
+                });
+                builder.show();
+                return true;
+            }
+        });
     }
+
+
 }

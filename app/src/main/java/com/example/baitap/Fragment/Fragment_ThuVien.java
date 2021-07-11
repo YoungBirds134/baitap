@@ -1,14 +1,20 @@
 package com.example.baitap.Fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +32,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
+import com.example.baitap.DB.DB_Sqlite;
+import com.example.baitap.Model.Playlist;
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
 import com.squareup.picasso.Picasso;
@@ -43,14 +51,12 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     public static ArrayList<Song> arrayList = new ArrayList<>();
 
-    Context context;
     public static String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
     public static String url_image = "https://huychimnonblog.000webhostapp.com/image/";
-    ImageView imageView, imageView_Top;
+
     public static Song song = new Song();
 
     Button btnPlay, btnSkip_Top, btn_PlayAll, btn_PlayRandom;
-
 
 
     @Override
@@ -65,13 +71,14 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thuvien, container, false);
 
+//ínert
+
         btn_PlayAll = view.findViewById(R.id.btn_playing_all_thuvien);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
         btn_PlayRandom = view.findViewById(R.id.btn_playing_random_thuvien);
         btnSkip_Top = view.findViewById(R.id.btnSkip_Top);
 
         btnPlay = view.findViewById(R.id.btnPlay_Top);
-
 
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
@@ -118,6 +125,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
                 startActivity(intent);
             }
         });
+
         return view;
 
     }
@@ -129,14 +137,26 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
     }
 
-    public ArrayList<Song> initSong() {
-        ArrayList<Song> arrayList = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            arrayList.add(new Song(0 + i, "Song" + i, "Image" + i, "12" + i, "Path" + i, 0, "date" + i, "Genre" + i, "Album" + i, "Artist" + i));
+    public void Dialog_Them_Playlist() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_song_playlist);
 
-        }
-        return arrayList;
+        Spinner spinner = (Spinner) dialog.findViewById(R.id.spiner_playlist);
+        Button btnTem = (Button) dialog.findViewById(R.id.btn_Them_playlist_song);
+        Button btnHuy = (Button) dialog.findViewById(R.id.btn_Xoa_playlist_song);
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
+
+
 
     public void get_Songs() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext().getApplicationContext());
@@ -196,24 +216,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
         getContext().startActivity(i);
 
 
-//
 
-
-//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//        try {
-//            mediaPlayer.setDataSource(getContext(), Uri.parse(song.getPath()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            mediaPlayer.prepare();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        mediaPlayer.start();
-//        btnPlay.setBackgroundResource(R.drawable.ic_pause);
-//
-//
 
     }
 }

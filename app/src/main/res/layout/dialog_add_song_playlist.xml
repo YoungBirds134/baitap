@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Thêm Vào Playlist"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:layout_below="@id/textView2"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:id="@+id/spiner_playlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        ></Spinner>
+
+    <Button
+        android:id="@+id/btn_Them_playlist_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spiner_playlist"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Thêm"></Button>
+
+    <Button
+        android:id="@+id/btn_Xoa_playlist_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_Them_playlist_song"
+        android:layout_marginTop="10dp"
+        android:text="Hủy"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"></Button>
+</RelativeLayout>
