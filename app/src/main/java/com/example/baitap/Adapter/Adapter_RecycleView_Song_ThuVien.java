@@ -159,6 +159,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
                         break;
                     }
                 }
+                notifyDataSetChanged();
             }
         });
     }

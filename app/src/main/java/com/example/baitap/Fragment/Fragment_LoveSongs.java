@@ -27,6 +27,7 @@ public class Fragment_LoveSongs extends Fragment implements Adapter_RecycleView_
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_LoveSongs adapter_recycleView_song_loveSongs;
     ArrayList<Song> arrayList = new ArrayList<>();
+    public static Song song = new Song();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +50,26 @@ public class Fragment_LoveSongs extends Fragment implements Adapter_RecycleView_
     }
 
     public void onItemClick(int position) {
-        Song song = Activity_Main.arrayList_lovesong.get(position);
-        Toast.makeText(getContext(), " Fail ==" + song.getName_Song(), Toast.LENGTH_SHORT).show();
+
+      song =  Activity_Main.arrayList_lovesong.get(position);
+
+
+        Intent i = new Intent(getContext(), Activity_NowPlaying.class);
+        i.putExtra("Position", position);
+        i.putExtra("MaBaiHat", Activity_Main.arrayList_lovesong.get(position).getId_Song());
+        i.putExtra("TenBaiHat", Activity_Main.arrayList_lovesong.get(position).getName_Song());
+        i.putExtra("TenCaSi", Activity_Main.arrayList_lovesong.get(position).getName_Artist());
+        i.putExtra("ThoiGian", Activity_Main.arrayList_lovesong.get(position).getDuration());
+        i.putExtra("HinhAnh", Activity_Main.arrayList_lovesong.get(position).getImage_Song());
+        i.putExtra("Link", Activity_Main.arrayList_lovesong.get(position).getPath());
+        try {
+            if (Activity_NowPlaying.musicPlayer != null) {
+                Activity_NowPlaying.musicPlayer.stop();
+
+            }
+        } catch (Exception e) {
+        }
+        getContext().startActivity(i);
 
     }
 }

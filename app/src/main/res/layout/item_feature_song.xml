@@ -7,7 +7,7 @@
     android:background="@drawable/ripple_effect"
     tools:background="#444444">
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/txt_image"
+        android:id="@+id/txt_image_playlist"
         android:layout_width="52dp"
         android:layout_height="52dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,12 +20,12 @@
         android:layout_marginStart="22dp"
         />
     <TextView
-        android:id="@+id/title_Name_Top"
+        android:id="@+id/title_Name_Top_playlist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/title_Artist_Top"
-        app:layout_constraintStart_toEndOf="@id/txt_image"
+        app:layout_constraintStart_toEndOf="@id/txt_image_playlist"
         app:layout_constraintVertical_chainStyle="packed"
         android:textStyle="bold"
         android:textColor="@color/FlatWhite"
@@ -40,8 +40,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_Name_Top"
-        app:layout_constraintStart_toStartOf="@id/title_Name_Top"
+        app:layout_constraintTop_toBottomOf="@id/title_Name_Top_playlist"
+        app:layout_constraintStart_toStartOf="@id/title_Name_Top_playlist"
         app:layout_constraintEnd_toStartOf="@id/menu_button"
         android:textStyle="bold"
         android:textColor="#CCF5F5F5"
@@ -68,11 +68,11 @@
         android:layout_height="0dp"
         android:alpha="0.55"
         android:elevation="1dp"
-        app:layout_constraintBottom_toBottomOf="@id/txt_image"
-        app:layout_constraintEnd_toEndOf="@id/txt_image"
+        app:layout_constraintBottom_toBottomOf="@id/txt_image_playlist"
+        app:layout_constraintEnd_toEndOf="@id/txt_image_playlist"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/txt_image"
-        app:layout_constraintTop_toTopOf="@id/txt_image"
+        app:layout_constraintStart_toStartOf="@id/txt_image_playlist"
+        app:layout_constraintTop_toTopOf="@id/txt_image_playlist"
         app:layout_constraintVertical_bias="1.0"
         app:tint="#394545" />
 </androidx.constraintlayout.widget.ConstraintLayout>

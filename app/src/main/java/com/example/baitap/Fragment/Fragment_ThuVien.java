@@ -35,22 +35,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_Song_ThuVien.OnItemClickListener {
-    TextView textView_Name_Top, textView_Artist_Top;
+
     RecyclerView recyclerView;
     Adapter_RecycleView_Song_ThuVien adapter_recycleView_song_thuVien;
     public static ArrayList<Song> arrayList = new ArrayList<>();
-    String tenBaiHat_Top, tenCaSi_Top,hinhAnh_Top;
+
     Context context;
     public static String url = "https://huychimnonblog.000webhostapp.com/getSongs.php";
     public static String url_image = "https://huychimnonblog.000webhostapp.com/image/";
     ImageView imageView, imageView_Top;
     public static Song song = new Song();
 
-    Button btnPlay, btnSkip_Top, btn_PlayAll;
+    Button btnPlay, btnSkip_Top, btn_PlayAll, btn_PlayRandom;
 
-    Uri uri;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,36 +67,20 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
         btn_PlayAll = view.findViewById(R.id.btn_playing_all_thuvien);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
-        imageView_Top = view.findViewById(R.id.txt_image);
-        textView_Name_Top = view.findViewById(R.id.title_Name_Top);
-        textView_Artist_Top = view.findViewById(R.id.title_Artist_Top);
+        btn_PlayRandom = view.findViewById(R.id.btn_playing_random_thuvien);
         btnSkip_Top = view.findViewById(R.id.btnSkip_Top);
 
         btnPlay = view.findViewById(R.id.btnPlay_Top);
-//Top Thông Tin Bài Hát Now Playing
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            tenBaiHat_Top = bundle.getString("TenBaiHat_Top");
-            tenCaSi_Top = bundle.getString("TenCaSix_Top");
-            hinhAnh_Top = bundle.getString(" HinhAnh_Top ");
-        }
-        if (tenCaSi_Top==null && tenBaiHat_Top==null && hinhAnh_Top==null){
-        Toast.makeText(getContext(),"Loi load"+tenBaiHat_Top + " " + tenCaSi_Top,Toast.LENGTH_LONG).show();
-        }else {
-        textView_Name_Top.setText(tenBaiHat_Top);
-        textView_Artist_Top.setText(tenCaSi_Top);
-        Picasso.with(getContext()).load(url_image + hinhAnh_Top).placeholder(R.drawable.music_empty).into(imageView);
-        }
 
-
-        //Top Thông Tin Bài Hát Now Playing
 
         recyclerView = view.findViewById(R.id.recycler_view_thuvien);
         adapter_recycleView_song_thuVien = new Adapter_RecycleView_Song_ThuVien(arrayList, getContext());
         recyclerView.setAdapter(adapter_recycleView_song_thuVien);
         adapter_recycleView_song_thuVien.setOnItemClickListener(Fragment_ThuVien.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
         get_Songs();
+
 
         btn_PlayAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +99,25 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
             }
         });
 
+        btn_PlayRandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Activity_NowPlaying.class);
+                try {
+                    if (Activity_NowPlaying.musicPlayer != null) {
+                        Activity_NowPlaying.musicPlayer.stop();
 
+                    }
+                } catch (Exception e) {
+
+                }
+                Random rd = new Random();
+
+                int position = rd.nextInt(arrayList.size());
+                intent.putExtra("Position", position);
+                startActivity(intent);
+            }
+        });
         return view;
 
     }
@@ -189,8 +192,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
             }
         } catch (Exception e) {
         }
-        textView_Name_Top.setText(arrayList.get(position).getName_Song());
-        textView_Artist_Top.setText(arrayList.get(position).getName_Artist());
+
         getContext().startActivity(i);
 
 

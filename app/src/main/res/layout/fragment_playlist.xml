@@ -6,23 +6,20 @@
     android:layout_height="match_parent"
     tools:background="@color/library_back_color">
 
-    <Button
-        android:id="@+id/button_playlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
     <com.ldt.springback.view.SpringBackLayout
         android:id="@+id/springBackLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginTop="40dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_thuvien"
+            android:id="@+id/recycler_view_playlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -35,5 +32,14 @@
             tools:listitem="@layout/item_playlist_child"
             tools:spanCount="2" />
     </com.ldt.springback.view.SpringBackLayout>
+
+    <Button
+        android:id="@+id/btn_Playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm"
+        tools:layout_editor_absoluteX="309dp"
+        android:textColor="@color/roseEnd"
+        android:textStyle="bold"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

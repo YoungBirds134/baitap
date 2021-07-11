@@ -7,58 +7,6 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/BackwardColorHeavy"
-        tools:ignore="MissingConstraints">
-
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/txt_image"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:src="@drawable/music_empty"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_border_color="#66F5F5F5"
-            app:riv_border_width="1dp"
-            app:riv_oval="true" />
-
-        <TextView
-            android:id="@+id/title_Name_Top"
-            android:layout_width="307dp"
-            android:layout_height="27dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/FlatWhite"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/title_Artist_Top"
-            app:layout_constraintEnd_toStartOf="@id/menu_button"
-            app:layout_constraintStart_toEndOf="@+id/txt_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-
-            tools:text="Blame" />
-
-        <TextView
-            android:id="@+id/title_Artist_Top"
-            android:layout_width="271dp"
-            android:layout_height="25dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#CCF5F5F5"
-            android:textSize="13sp"
-            android:textStyle="bold"
-
-            app:layout_constraintStart_toEndOf="@+id/txt_image"
-            app:layout_constraintTop_toBottomOf="@id/title_Name_Top"
-            tools:text="KYLE." />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +14,7 @@
 
         <Button
             android:id="@+id/btn_playing_all_thuvien"
-            android:layout_width="191dp"
+            android:layout_width="187dp"
             android:layout_height="wrap_content"
 
             android:text="Phát Tất Cả"

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm Playlist"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/eddit_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView2"
+        android:layout_marginTop="10dp"
+
+        android:hint="Tên Playlist"></EditText>
+
+    <Button
+        android:id="@+id/btn_Them_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eddit_playlist"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Thêm"></Button>
+
+    <Button
+        android:id="@+id/btn_Xoa_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_Them_playlist"
+        android:layout_marginTop="10dp"
+        android:text="Hủy"
+        android:textColor="@color/roseEnd"
+        android:textSize="30sp"
+        android:textStyle="bold"></Button>
+</RelativeLayout>

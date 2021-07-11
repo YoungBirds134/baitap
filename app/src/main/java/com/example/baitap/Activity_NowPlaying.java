@@ -1,16 +1,16 @@
 package com.example.baitap;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.baitap.Fragment.Fragment_ThuVien;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
+import java.util.Random;
 
 public class Activity_NowPlaying extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,11 +28,13 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     TextView tvTime, tvDuration;
     SeekBar seekBarTime, seekBarVolume;
     Button btnPlay, btnPre, btnSkip;
+    ToggleButton btn_shuffle;
     public static MediaPlayer musicPlayer;
     int maBaiHat, viTriBaiHat;
     public static String tenBaiHat, tenCaSi, thoiGian, hinhAnh, link;
     ImageView imageView;
     TextView textView_Name_Top, textView_Artist_Top;
+    public static boolean isShuffle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,10 +53,11 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
 
         // hide the actionbar
-        textView_Name_Top = findViewById(R.id.title_Name_Top);
+        textView_Name_Top = findViewById(R.id.title_Name_Top_playlist);
         textView_Artist_Top = findViewById(R.id.title_Artist_Top);
 
 
+        btn_shuffle=findViewById(R.id.Btn_Shuffle);
         imageView = findViewById(R.id.image__Now_Playing);
         tvTime = findViewById(R.id.tvTime);
         tvDuration = findViewById(R.id.tvDuration);
@@ -70,6 +73,28 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         txt_NameArtist.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
         Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
 
+        btn_shuffle.setChecked(false);
+        btn_shuffle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)  {
+                    isShuffle=true;
+                } else {
+                    isShuffle=false;
+                }
+            }
+        });
+
+        //Gửi dữ liệu đến fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("TenBaiHat_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
+        bundle.putString("TenCaSi_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
+        bundle.putString("HinhAnh_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song());
+        Fragment_ThuVien fragment_thuVien = new Fragment_ThuVien();
+        fragment_thuVien.setArguments(bundle);
+
+        //Gửi dữ liệu đến fragment
+
 //        Toast.makeText(this, "" + thoiGian, Toast.LENGTH_LONG).show();
 try {
     textView_Name_Top.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
@@ -83,14 +108,7 @@ try {
         } catch (Exception e) {
 
         }
-//Gửi dữ liệu đến fragment
-        Bundle bundle = new Bundle();
-        bundle.putString("TenBaiHat_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
-        bundle.putString("TenCaSi_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
-        bundle.putString("HinhAnh_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song());
-        Fragment_ThuVien fragment_thuVien = new Fragment_ThuVien();
-        fragment_thuVien.setArguments(bundle);
-        //Gửi dữ liệu đến fragment
+
 
 
 
@@ -115,7 +133,8 @@ try {
 //        }
 
 
-        musicPlayer.setLooping(true);
+//        musicPlayer.setLooping(true);
+
         musicPlayer.seekTo(0);
         musicPlayer.setVolume(0.5f, 0.5f);
 
@@ -126,6 +145,13 @@ try {
         btnPre.setOnClickListener(this);
         btnSkip.setOnClickListener(this);
 
+        musicPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                nextSong();
+
+            }
+        });
 
         seekBarVolume.setProgress(50);
         seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -258,5 +284,22 @@ try {
         txt_NameArtist.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
         Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
     }
+    public void nextSong(){
+        Random rd = new Random();
+if (isShuffle){
+    viTriBaiHat=rd.nextInt(Fragment_ThuVien.arrayList.size());
+}else {
+    viTriBaiHat++;
+}
+        if (viTriBaiHat == Fragment_ThuVien.arrayList.size()) {
+            viTriBaiHat = 0;
+        }
+        if (musicPlayer.isPlaying()) {
+            musicPlayer.stop();
+        }
+        KhoiTaoMusicPlayer();
+        musicPlayer.start();
+    }
+
 
 }
