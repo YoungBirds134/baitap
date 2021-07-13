@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +7,7 @@
 
 
     <RelativeLayout
+        android:gravity="center"
         android:id="@+id/relativeLayout"
         tools:ignore="MissingConstraints"
         android:layout_width="match_parent"
@@ -21,27 +22,6 @@
             android:background="#434747"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/search_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@color/white"
-                android:cursorVisible="false"
-                android:drawableLeft="@drawable/ic_baseline_search_24"
-                android:hint="Name, Description"
-
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:focusable="true"
-                android:clickable="true"/>
-
             <include
                 android:id="@+id/layouttitle"
                 layout="@layout/layout_title"
@@ -52,9 +32,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TIM KIEM"
+        android:text="Tìm Kiếm:"
         android:textColor="@color/white"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="390dp"></TextView>
-</RelativeLayout>
+        android:textSize="28sp"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="212dp"></TextView>
+
+    <EditText
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/white"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:focusable="true"
+        android:gravity="center"
+        android:hint="Name, Description"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="264dp" />
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.appcompat.widget.SearchView>
+</androidx.constraintlayout.widget.ConstraintLayout>

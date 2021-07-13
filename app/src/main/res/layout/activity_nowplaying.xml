@@ -76,19 +76,19 @@
             android:id="@+id/btnPre"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/ic_skip_previous_white_36dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="52dp" />
+            tools:layout_editor_absoluteY="26dp" />
 
         <Button
             android:id="@+id/btnPlay_Top"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="56dp"
             android:background="@drawable/ic_play"
             app:layout_constraintStart_toEndOf="@+id/btnPre"
-            tools:layout_editor_absoluteY="52dp" />
+            tools:layout_editor_absoluteY="26dp" />
 
         <Button
             android:id="@+id/btnSkip_Top"
@@ -96,20 +96,21 @@
             android:layout_height="50dp"
             android:background="@drawable/ic_skip_next_white_36dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.704"
+            app:layout_constraintHorizontal_bias="0.709"
             app:layout_constraintStart_toEndOf="@+id/btnPlay_Top"
-            tools:layout_editor_absoluteY="52dp" />
+            tools:layout_editor_absoluteY="26dp" />
 
         <ToggleButton
             android:id="@+id/Btn_Shuffle"
             android:layout_width="50dp"
             android:layout_height="50dp"
 
+            android:layout_marginTop="12dp"
             android:background="@drawable/toggle_shuffle"
             android:textOff=""
             android:textOn=""
             app:layout_constraintTop_toBottomOf="@+id/btnPlay_Top"
-            tools:layout_editor_absoluteX="121dp" />
+            tools:layout_editor_absoluteX="122dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout

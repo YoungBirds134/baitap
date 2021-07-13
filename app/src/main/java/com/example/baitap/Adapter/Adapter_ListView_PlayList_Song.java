@@ -22,12 +22,12 @@ import java.util.ArrayList;
 
 public class Adapter_ListView_PlayList_Song extends BaseAdapter {
     Activity_Song_Playlist context;
-    DB_Sqlite dataBase;
-    ArrayList<Song_Playlist> arrayList;
+
+    ArrayList<Song> arrayList;
     Adapter_ListView_PlayList_Song.ViewHolder viewHolder = null;
     String url = "https://huychimnonblog.000webhostapp.com/image/";
 
-    public Adapter_ListView_PlayList_Song(Activity_Song_Playlist context, ArrayList<Song_Playlist> arrayList) {
+    public Adapter_ListView_PlayList_Song(Activity_Song_Playlist context, ArrayList<Song> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -50,7 +50,7 @@ public class Adapter_ListView_PlayList_Song extends BaseAdapter {
     public class ViewHolder {
         TextView txt_ten;
         ImageView imageView_hinh;
-Button button;
+        Button button;
 
     }
 
@@ -64,16 +64,16 @@ Button button;
 
             viewHolder.txt_ten = view.findViewById(R.id.item_album_view_title);
             viewHolder.imageView_hinh = view.findViewById(R.id.item_album_view_image);
-            Song_Playlist song_playlist = (Song_Playlist) getItem(position);
+            Song song_playlist = (Song) getItem(position);
             viewHolder.txt_ten.setText(song_playlist.name_Song);
             Picasso.with(context).load(url + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(viewHolder.imageView_hinh);
-viewHolder.button = view.findViewById(R.id.favBtn_Remove);
-viewHolder.button.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-context.Dialog_Xoa(song_playlist.getId_Song());
-    }
-});
+            viewHolder.button = view.findViewById(R.id.favBtn_Remove);
+            viewHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.Dialog_Xoa(song_playlist.getId_Song());
+                }
+            });
 
         }
         return view;

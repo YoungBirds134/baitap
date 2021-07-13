@@ -16,8 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.baitap.Fragment.Fragment_ThuVien;
+import com.example.baitap.Model.Song;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Activity_NowPlaying extends AppCompatActivity implements View.OnClickListener {
@@ -35,12 +37,12 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     ImageView imageView;
     TextView textView_Name_Top, textView_Artist_Top;
     public static boolean isShuffle;
+    ArrayList<Song> arrayList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nowplaying);
-
 
         Intent intent = getIntent();
         viTriBaiHat = intent.getIntExtra("Position", 0);
@@ -51,55 +53,27 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
         hinhAnh = intent.getStringExtra("HinhAnh");
         link = intent.getStringExtra("Link");
 
+        Bundle bundle = intent.getBundleExtra("bundle");
+        arrayList = (ArrayList<Song>) bundle.getSerializable("array_thuvien");
 
-        // hide the actionbar
-        textView_Name_Top = findViewById(R.id.title_Name_Top_playlist);
-        textView_Artist_Top = findViewById(R.id.title_Artist_Top);
-
-
-        btn_shuffle=findViewById(R.id.Btn_Shuffle);
-        imageView = findViewById(R.id.image__Now_Playing);
-        tvTime = findViewById(R.id.tvTime);
-        tvDuration = findViewById(R.id.tvDuration);
-        seekBarTime = findViewById(R.id.seekBarTime);
-        seekBarVolume = findViewById(R.id.seekBarVolume);
-        btnPlay = findViewById(R.id.btnPlay_Top);
-        btnPre = findViewById(R.id.btnPre);
-        btnSkip = findViewById(R.id.btnSkip_Top);
-
-        txt_NameSong = findViewById(R.id.txt_nameSongPlaying);
-        txt_NameSong.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
-        txt_NameArtist = findViewById(R.id.txt_nameArtist_Playing1);
-        txt_NameArtist.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
-        Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
+        AnhXa();
+        txt_NameSong.setText(arrayList.get(viTriBaiHat).getName_Song());
+       if (arrayList.get(viTriBaiHat).getName_Artist() != null){
+        txt_NameArtist.setText(arrayList.get(viTriBaiHat).getName_Artist());}
+        Picasso.with(this).load(Fragment_ThuVien.url_image + arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
 
         btn_shuffle.setChecked(false);
         btn_shuffle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)  {
-                    isShuffle=true;
+                if (isChecked) {
+                    isShuffle = true;
                 } else {
-                    isShuffle=false;
+                    isShuffle = false;
                 }
             }
         });
 
-        //Gửi dữ liệu đến fragment
-        Bundle bundle = new Bundle();
-        bundle.putString("TenBaiHat_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
-        bundle.putString("TenCaSi_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
-        bundle.putString("HinhAnh_Top",Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song());
-        Fragment_ThuVien fragment_thuVien = new Fragment_ThuVien();
-        fragment_thuVien.setArguments(bundle);
-
-        //Gửi dữ liệu đến fragment
-
-//        Toast.makeText(this, "" + thoiGian, Toast.LENGTH_LONG).show();
-try {
-    textView_Name_Top.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
-    textView_Artist_Top.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
-}catch (Exception e){}
 
         KhoiTaoMusicPlayer();
         try {
@@ -108,8 +82,6 @@ try {
         } catch (Exception e) {
 
         }
-
-
 
 
 //        musicPlayer = new MediaPlayer();
@@ -139,7 +111,7 @@ try {
         musicPlayer.setVolume(0.5f, 0.5f);
 
 //        thoiGian = millisecondsToString(musicPlayer.getDuration());
-        tvDuration.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getDuration());
+        tvDuration.setText(arrayList.get(viTriBaiHat).getDuration());
 
         btnPlay.setOnClickListener(this);
         btnPre.setOnClickListener(this);
@@ -221,6 +193,28 @@ try {
 
     } // end main
 
+    public void AnhXa() {
+
+
+        // hide the actionbar
+        textView_Name_Top = findViewById(R.id.title_Name_Top_playlist);
+        textView_Artist_Top = findViewById(R.id.title_Artist_Top);
+
+
+        btn_shuffle = findViewById(R.id.Btn_Shuffle);
+        imageView = findViewById(R.id.image__Now_Playing);
+        tvTime = findViewById(R.id.tvTime);
+        tvDuration = findViewById(R.id.tvDuration);
+        seekBarTime = findViewById(R.id.seekBarTime);
+        seekBarVolume = findViewById(R.id.seekBarVolume);
+        btnPlay = findViewById(R.id.btnPlay_Top);
+        btnPre = findViewById(R.id.btnPre);
+        btnSkip = findViewById(R.id.btnSkip_Top);
+
+        txt_NameSong = findViewById(R.id.txt_nameSongPlaying);
+
+        txt_NameArtist = findViewById(R.id.txt_nameArtist_Playing1);
+    }
 
     public String millisecondsToString(int time) {
         String elapsedTime = "";
@@ -253,7 +247,7 @@ try {
         } else if (view.getId() == R.id.btnPre) {
             viTriBaiHat--;
 
-            if (viTriBaiHat<0) {
+            if (viTriBaiHat < 0) {
                 viTriBaiHat = 0;
             }
             if (musicPlayer.isPlaying()) {
@@ -264,7 +258,7 @@ try {
         } else if (view.getId() == R.id.btnSkip_Top) {
             viTriBaiHat++;
 
-            if (viTriBaiHat == Fragment_ThuVien.arrayList.size()) {
+            if (viTriBaiHat == arrayList.size()) {
                 viTriBaiHat = 0;
             }
             if (musicPlayer.isPlaying()) {
@@ -278,20 +272,21 @@ try {
 
     private void KhoiTaoMusicPlayer() {
 
-        musicPlayer = MediaPlayer.create(this, Uri.parse(Fragment_ThuVien.arrayList.get(viTriBaiHat).getPath()));
-        txt_NameSong.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Song());
-        tvDuration.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getDuration());
-        txt_NameArtist.setText(Fragment_ThuVien.arrayList.get(viTriBaiHat).getName_Artist());
-        Picasso.with(this).load(Fragment_ThuVien.url_image + Fragment_ThuVien.arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
+        musicPlayer = MediaPlayer.create(this, Uri.parse(arrayList.get(viTriBaiHat).getPath()));
+        txt_NameSong.setText(arrayList.get(viTriBaiHat).getName_Song());
+        tvDuration.setText(arrayList.get(viTriBaiHat).getDuration());
+        txt_NameArtist.setText(arrayList.get(viTriBaiHat).getName_Artist());
+        Picasso.with(this).load(Fragment_ThuVien.url_image + arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
     }
-    public void nextSong(){
+
+    public void nextSong() {
         Random rd = new Random();
-if (isShuffle){
-    viTriBaiHat=rd.nextInt(Fragment_ThuVien.arrayList.size());
-}else {
-    viTriBaiHat++;
-}
-        if (viTriBaiHat == Fragment_ThuVien.arrayList.size()) {
+        if (isShuffle) {
+            viTriBaiHat = rd.nextInt(arrayList.size());
+        } else {
+            viTriBaiHat++;
+        }
+        if (viTriBaiHat == arrayList.size()) {
             viTriBaiHat = 0;
         }
         if (musicPlayer.isPlaying()) {

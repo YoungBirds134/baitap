@@ -82,6 +82,8 @@ public class Fragment_PlayList extends Fragment {
         dataBase.QueryData("CREATE TABLE IF NOT EXISTS \"songs\" (\n" +
                 "\t\"id_song\"\tinteger,\n" +
                 "\t\"name_song\"\tvarchar(20)\t,\n" +
+
+
                 "\t\"image_song\"\tvarchar(24)\t,\n" +
                 "\t\"duration\"\tTIME,\n" +
 

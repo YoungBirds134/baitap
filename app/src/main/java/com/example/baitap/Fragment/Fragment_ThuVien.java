@@ -1,21 +1,14 @@
 package com.example.baitap.Fragment;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,16 +25,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.baitap.Activity_NowPlaying;
 import com.example.baitap.Adapter.Adapter_RecycleView_Song_ThuVien;
-import com.example.baitap.DB.DB_Sqlite;
-import com.example.baitap.Model.Playlist;
 import com.example.baitap.Model.Song;
 import com.example.baitap.R;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -73,9 +64,9 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
 //ínert
 
-        btn_PlayAll = view.findViewById(R.id.btn_playing_all_thuvien);
+        btn_PlayAll = view.findViewById(R.id.btn_playing_all_playlistsong);
         btnPlay = view.findViewById(R.id.btnPlay_Top);
-        btn_PlayRandom = view.findViewById(R.id.btn_playing_random_thuvien);
+
         btnSkip_Top = view.findViewById(R.id.btnSkip_Top);
 
         btnPlay = view.findViewById(R.id.btnPlay_Top);
@@ -92,7 +83,10 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
         btn_PlayAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getContext(), Activity_NowPlaying.class);
+                Bundle  bundle = new Bundle();
+                bundle.putSerializable("array_thuvien",(Serializable)arrayList);
                 try {
                     if (Activity_NowPlaying.musicPlayer != null) {
                         Activity_NowPlaying.musicPlayer.stop();
@@ -101,30 +95,12 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
                 } catch (Exception e) {
 
                 }
-
+intent.putExtra("bundle",bundle);
                 startActivity(intent);
             }
         });
 
-        btn_PlayRandom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Activity_NowPlaying.class);
-                try {
-                    if (Activity_NowPlaying.musicPlayer != null) {
-                        Activity_NowPlaying.musicPlayer.stop();
 
-                    }
-                } catch (Exception e) {
-
-                }
-                Random rd = new Random();
-
-                int position = rd.nextInt(arrayList.size());
-                intent.putExtra("Position", position);
-                startActivity(intent);
-            }
-        });
 
         return view;
 
@@ -198,6 +174,8 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
 
 
         Intent i = new Intent(getContext(), Activity_NowPlaying.class);
+        Bundle  bundle = new Bundle();
+        bundle.putSerializable("array_thuvien",(Serializable)arrayList);
         i.putExtra("Position", position);
         i.putExtra("MaBaiHat", arrayList.get(position).getId_Song());
         i.putExtra("TenBaiHat", arrayList.get(position).getName_Song());
@@ -212,7 +190,7 @@ public class Fragment_ThuVien extends Fragment implements Adapter_RecycleView_So
             }
         } catch (Exception e) {
         }
-
+        i.putExtra("bundle",bundle);
         getContext().startActivity(i);
 
 

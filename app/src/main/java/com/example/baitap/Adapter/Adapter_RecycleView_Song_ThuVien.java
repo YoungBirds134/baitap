@@ -215,6 +215,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
         dataBase.QueryData("CREATE TABLE IF NOT EXISTS \"songs\" (\n" +
                 "\t\"id_song\"\tinteger,\n" +
                 "\t\"name_song\"\tvarchar(20),\n" +
+
                 "\t\"image_song\"\tvarchar(24),\n" +
                 "\t\"duration\"\tTIME,\n" +
 
