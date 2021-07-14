@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_hot"
-android:icon="@drawable/ic_baseline_local_fire_department_24"
-        android:title="Xu hướng" />
+android:icon="@drawable/ic_baseline_android_24"
+        android:title="About" />
     <item
         android:id="@+id/nav_star"
         android:icon="@drawable/ic_baseline_star_24"

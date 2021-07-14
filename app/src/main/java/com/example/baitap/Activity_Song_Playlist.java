@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 public class Activity_Song_Playlist extends AppCompatActivity implements Adapter_RecycleView_Playlist_Song.OnItemClickListener {
     Adapter_RecycleView_Playlist_Song adapter_recycleView_playlist_song;
+    Adapter_ListView_PlayList_Song adapter_listView_playList_song;
     public static ArrayList<Song> arrayList_song_playlist = new ArrayList<>();
     ListView lv;
     RecyclerView recyclerView;
@@ -68,11 +69,18 @@ public class Activity_Song_Playlist extends AppCompatActivity implements Adapter
         maPlaylist = intent.getIntExtra("MaPlayList", 1);
 
         button = findViewById(R.id.btn_playing_all_playlistsong);
+//
         recyclerView = findViewById(R.id.rv_song_playlist);
         adapter_recycleView_playlist_song = new Adapter_RecycleView_Playlist_Song(arrayList_song_playlist, Activity_Song_Playlist.this);
         recyclerView.setAdapter(adapter_recycleView_playlist_song);
         adapter_recycleView_playlist_song.setOnItemClickListener(Activity_Song_Playlist.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Activity_Song_Playlist.this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager
+                (new LinearLayoutManager(Activity_Song_Playlist.this, LinearLayoutManager.VERTICAL, false));
+
+//        lv=findViewById(R.id.lv_playlist);
+//        adapter_listView_playList_song=new Adapter_ListView_PlayList_Song(Activity_Song_Playlist.this,arrayList_song_playlist);
+//        lv.setAdapter(adapter_listView_playList_song);
+
         try {
             GetSongs_PlayList(maPlaylist);
         } catch (Exception e) {
@@ -99,8 +107,14 @@ public class Activity_Song_Playlist extends AppCompatActivity implements Adapter
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     public void GetSongs_PlayList(int maPlaylist) {
-        Cursor data_playlist = Activity_Song_Playlist.dataBase.GetData("SELECT songs.id_song,songs.name_song,songs.image_song,songs.duration,songs.link FROM song_playlist,songs,playlist\n" +
+        Cursor data_playlist = Activity_Song_Playlist.dataBase.GetData("SELECT songs.id_song,songs.name_song,songs.image_song,songs.duration,songs.link " +
+                "FROM song_playlist,songs,playlist\n" +
                 "WHERE song_playlist.id_song=songs.id_song and playlist.id_playlist=playlist.id_playlist and playlist.id_playlist='" + maPlaylist + "'");
         arrayList_song_playlist.clear();
         while (data_playlist.moveToNext()) {
@@ -109,7 +123,7 @@ public class Activity_Song_Playlist extends AppCompatActivity implements Adapter
             String image_song = data_playlist.getString(2);
             String duration = data_playlist.getString(3);
             String link = data_playlist.getString(4);
-            Activity_Song_Playlist.arrayList_song_playlist.add(new Song(id_song, name_song, image_song, duration, link, 0, null, null, null, null));
+            arrayList_song_playlist.add(new Song(id_song, name_song, image_song, duration, link, 0, null, null, null, null));
         }
         adapter_recycleView_playlist_song.notifyDataSetChanged();
     }

@@ -50,6 +50,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Fragment_PlayList extends Fragment {
     ArrayList<Playlist> arrayList = new ArrayList<>();
@@ -144,10 +145,12 @@ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onClick(View v) {
                 String name_playlist = editText_ten.getText().toString();
+                Random rd = new Random();
+                int ma = rd.nextInt(400);
                 if (name_playlist.equals("")) {
                     Toast.makeText(getContext(), "Vui Lòng Nhập Tên Playlist", Toast.LENGTH_SHORT).show();
                 } else {
-                    dataBase.QueryData("INSERT INTO playlist VALUES(null,'" + name_playlist + "')");
+                    dataBase.QueryData("INSERT INTO playlist VALUES('"+ma+"','" + name_playlist + "')");
                     Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
 
                     dialog.dismiss();

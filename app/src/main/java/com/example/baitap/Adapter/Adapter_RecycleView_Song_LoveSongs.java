@@ -89,7 +89,10 @@ public class Adapter_RecycleView_Song_LoveSongs extends RecyclerView.Adapter<Ada
     }
 
 
-
+    public void UpdateList(ArrayList<Song> tam){
+        arrayList=tam;
+        notifyDataSetChanged();
+    }
     public class SongHolder extends RecyclerView.ViewHolder {
 
         TextView textView_Name;

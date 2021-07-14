@@ -37,7 +37,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
     ImageView imageView;
     TextView textView_Name_Top, textView_Artist_Top;
     public static boolean isShuffle;
-    ArrayList<Song> arrayList;
+    ArrayList<Song> arrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +58,9 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
         AnhXa();
         txt_NameSong.setText(arrayList.get(viTriBaiHat).getName_Song());
-       if (arrayList.get(viTriBaiHat).getName_Artist() != null){
-        txt_NameArtist.setText(arrayList.get(viTriBaiHat).getName_Artist());}
+        if (arrayList.get(viTriBaiHat).getName_Artist() != null) {
+            txt_NameArtist.setText(arrayList.get(viTriBaiHat).getName_Artist());
+        }
         Picasso.with(this).load(Fragment_ThuVien.url_image + arrayList.get(viTriBaiHat).getImage_Song()).placeholder(R.drawable.music_empty).into(imageView);
 
         btn_shuffle.setChecked(false);
@@ -256,17 +257,17 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
             KhoiTaoMusicPlayer();
             musicPlayer.start();
         } else if (view.getId() == R.id.btnSkip_Top) {
-            viTriBaiHat++;
-
-            if (viTriBaiHat == arrayList.size()) {
-                viTriBaiHat = 0;
-            }
-            if (musicPlayer.isPlaying()) {
-                musicPlayer.stop();
-            }
-            KhoiTaoMusicPlayer();
-            musicPlayer.start();
-
+//            viTriBaiHat++;
+//
+//            if (viTriBaiHat == arrayList.size()) {
+//                viTriBaiHat = 0;
+//            }
+//            if (musicPlayer.isPlaying()) {
+//                musicPlayer.stop();
+//            }
+//            KhoiTaoMusicPlayer();
+//            musicPlayer.start();
+            nextSong();
         }
     }
 
@@ -281,6 +282,7 @@ public class Activity_NowPlaying extends AppCompatActivity implements View.OnCli
 
     public void nextSong() {
         Random rd = new Random();
+
         if (isShuffle) {
             viTriBaiHat = rd.nextInt(arrayList.size());
         } else {

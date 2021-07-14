@@ -31,6 +31,7 @@ import com.example.baitap.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -77,75 +78,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
         holder.textView_Name.setText(arrayList.get(position).getName_Song());
         holder.textView_Des.setText(arrayList.get(position).getName_Artist());
         Picasso.with(context).load(url + arrayList.get(position).getImage_Song()).placeholder(R.drawable.music_empty).into(holder.imageView_Song);
-//        TONGGLE BUTTON
-//        TONGGLE BUTTON
-//        try {
-//            holder.favBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    boolean checked = ((ToggleButton) v).isChecked();
-//                    if (checked) {
-//                        if (Activity_Main.arrayList_lovesong.size() <= 0) {
-//                            Activity_Main.arrayList_lovesong.add(new Song(arrayList.get(position).getId_Song(), arrayList.get(position).getName_Song(), arrayList.get(position).getImage_Song(), arrayList.get(position).getDuration(), arrayList.get(position).getPath(), arrayList.get(position).getLike(), arrayList.get(position).getDate(), arrayList.get(position).getName_Genre(), arrayList.get(position).getName_Album(), arrayList.get(position).getName_Artist()));
-//                            Toast.makeText(context, " Success <=0", Toast.LENGTH_SHORT).show();
-//
-//
-//                        } else {
-//                            for (int i = 0; i < Activity_Main.arrayList_lovesong.size(); i++) {
-//                                if (Activity_Main.arrayList_lovesong.get(i).getId_Song() != arrayList.get(position).getId_Song()) {
-//
-//                                    Activity_Main.arrayList_lovesong.add(new Song(arrayList.get(position).getId_Song(), arrayList.get(position).getName_Song(), arrayList.get(position).getImage_Song(), arrayList.get(position).getDuration(), arrayList.get(position).getPath(), arrayList.get(position).getLike(), arrayList.get(position).getDate(), arrayList.get(position).getName_Genre(), arrayList.get(position).getName_Album(), arrayList.get(position).getName_Artist()));
-//                                    Toast.makeText(context, " Success !=" + " " + "id_lovesong" + i + " " + " id_pos" + position, Toast.LENGTH_SHORT).show();
-//
-//
-//                                } else {
-//                                    Toast.makeText(context, " Fail ==", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//
-//                            SharedPreferences.Editor editor = context.getSharedPreferences("save", MODE_PRIVATE).edit();
-//                            editor.putBoolean("NameOfThingToSave" , checked);
-//                            editor.apply();
-//                        }
-//
-//
-//                    } else {
-//                        try {
-//                            for (Song song : Activity_Main.arrayList_lovesong
-//                            ) {
-//                                if (song.getName_Song() == arrayList.get(position).getName_Song()) {
-//
-//                                }
-//
-//                            }
-////                            for (int i = 0; i< Activity_Main.arrayList_lovesong.size();i++){
-////                                if (Activity_Main.arrayList_lovesong.get(i).getId_Song() == arrayList.get(position).getId_Song())
-////                                {
-////                                    Activity_Main.arrayList_lovesong.remove(i);
-////
-////                                }
-////                            }
-//                            Activity_Main.arrayList_lovesong.remove(song);
-//                            SharedPreferences.Editor editor = context.getSharedPreferences("save", MODE_PRIVATE).edit();
-//                            editor.putBoolean("NameOfThingToSave" , false);
-//                            editor.apply();
-//
-//
-//
-//                            Toast.makeText(context, " Success delete", Toast.LENGTH_SHORT).show();
-//                        } catch (Exception e) {
-//                            Toast.makeText(context, " Fail :" + " " + e, Toast.LENGTH_SHORT).show();
-//
-//
-//                        }
-//
-//                    }
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.getMessage();
-//        }
-//          END TONGGLE BUTTon
+
 
         holder.favBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,12 +120,6 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
         });
 
 
-        ////////
-        //  SharedPreferences sharedPref = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        //   SharedPreferences.Editor editor = sharedPref.edit();
-        //  editor.putInt("id_Playlis", playlist.id_Playlist);
-        //editor.commit();
-        //////
         holder.btn_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,9 +193,13 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
             public void onClick(View v) {
                 SharedPreferences sharedPref = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                 int id_playlist = sharedPref.getInt("id_Playlis", 0);
+                Random rd = new Random();
+                int maID = rd.nextInt(555);
                 //Them     Vao bang song_playlist         va bang song
-              try {
-                    dataBase.QueryData("INSERT INTO  songs VALUES('" + arrayList.get(position).getId_Song() + "','" + arrayList.get(position).getName_Song() + "','" + arrayList.get(position).getImage_Song() + "','" + arrayList.get(position).getDuration() + "','" + arrayList.get(position).getPath() + "')");
+             try {
+
+
+                    dataBase.QueryData("INSERT INTO  songs VALUES('" + maID + "','" + arrayList.get(position).getName_Song() + "','" + arrayList.get(position).getImage_Song() + "','" + arrayList.get(position).getDuration() + "','" + arrayList.get(position).getPath() + "')");
                     Toast.makeText(context, " Đã thêm vào DB song: ", Toast.LENGTH_SHORT).show();
 
 
@@ -278,7 +209,8 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
                }
                 try {
 
-                    dataBase.QueryData("INSERT INTO song_playlist VALUES(null,'" + arrayList.get(position).getId_Song() + "','" + id_playlist + "')");
+                    int ma = rd.nextInt(900);
+                    dataBase.QueryData("INSERT INTO song_playlist VALUES('"+ma+"','" + maID + "','" + id_playlist + "')");
                     Toast.makeText(context, " Đã thêm vào DB song_playlist: ", Toast.LENGTH_SHORT).show();
 
 
