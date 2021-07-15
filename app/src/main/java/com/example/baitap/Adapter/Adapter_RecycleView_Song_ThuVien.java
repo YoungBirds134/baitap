@@ -95,7 +95,7 @@ public class Adapter_RecycleView_Song_ThuVien extends RecyclerView.Adapter<Adapt
                         if (Activity_Main.arrayList_lovesong.get(i).getId_Song() != arrayList.get(position).getId_Song()) {
 
                             Activity_Main.arrayList_lovesong.add(new Song(arrayList.get(position).getId_Song(), arrayList.get(position).getName_Song(), arrayList.get(position).getImage_Song(), arrayList.get(position).getDuration(), arrayList.get(position).getPath(), arrayList.get(position).getLike(), arrayList.get(position).getDate(), arrayList.get(position).getName_Genre(), arrayList.get(position).getName_Album(), arrayList.get(position).getName_Artist()));
-                            Toast.makeText(context, " Success !=" + " " + "id_lovesong" + Activity_Main.arrayList_lovesong.get(i).getId_Song() + " " + " id_pos" + position, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, " Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
 
 
                         } else {
